@@ -1,0 +1,35 @@
+{% extends 'comm/comm.html' %}
+{% block css_js %}
+    <style>
+		    .main-log{ height: 260px; width: 350px; margin-bottom: 30px; background: #fff;}
+		    .main-logbox{ width: 300px;}
+			.main-user-input{ width: 270px;}
+			.main-log .tit{ height: 50px; line-height: 50px; font-size: 24px;}
+			.login-left{ width: 650px;}
+			.login-left img{ margin: 20px 0px 0px 200px;}
+			.main-btn,.main-pass-text{ width: 300px;}
+		</style>
+{% endblock %}
+{% block content %}
+		<div class="main">
+			<div class="main-box1">
+				<div class="login-left"><img src="{{url_for("static",filename='images/loginpic.png')}}"/></div>
+				<div class="login-right">
+					<img src="{{url_for("static",filename='images/mmlogo.png')}}"  style="margin-left: 30px;"/>
+					<div class="main-log">
+					<div class="tit">会员登录</div>
+					<div class="main-logbox">
+						<i class="main-user"></i>
+						<input placeholder="账户名" type="text" class="main-user-input">
+					</div>
+					<div class="main-logbox">
+						<i class="main-password"></i>
+						<input placeholder="密码" type="text" class="main-user-input">
+					</div>
+					<button type="button" class="main-btn">立即登录</button>
+					<div class="main-pass-text">没有帐号？<a href="">免费注册</a><a href="" class="forget">忘记密码 &gt;</a></div>
+				</div>
+				</div>
+			</div>
+        </div>
+{% endblock %}

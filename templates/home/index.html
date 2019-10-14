@@ -1,0 +1,150 @@
+{% extends 'comm/comm.html' %}
+{% block content %}
+		<div class="banner"><img src="{{url_for("static",filename='images/banner.jpg')}}"/></div>
+		<div class="main">
+			<div class="main-box">
+			<div class="main-left"><!--left-->
+				<div class="main-l-top">
+					<div class="main-lt-pic">
+						<img src="{{url_for("static",filename='images/slogo.png')}}"/>
+						<p><a href="" class="more">了解更多 ></a></p>
+					</div>
+					<div class="main-lt-text">
+						南昌万家囍婚恋交友网是由一批婚恋专家，网络专家精心打造的。专为南昌地区有婚恋交友需求的单身人士服务的，专业正规的交友网站。主创团队在花费数年时间仔细研究，比较国内外多种婚恋服务后，取其精华，去其糟粕。并创造性地加入了一些本网站独有的元素，逐渐形成了现在这个克服了网络交友种种弊端的“安全高效”的交友平台。我们经过仔细研究，发现大众对于网络交友主要存在以下顾虑，我们针对大家的担心，提出了相应的，积极的对策，力求给您提供最满意的服务。
+					</div>
+				</div>
+				<div class="main-l-ban">
+					<div id="fsD1" class="focus" >
+                      <div id="D1pic1" class="fPic">
+                        <div class="fcon"><a href=""><img src="{{url_for("static",filename='images/sbanner.png')}}"></a> </div>
+                        <div class="fcon"><a href=""><img src="{{url_for("static",filename='images/erwei.png')}}" style="opacity: 1; "></a></div>
+                        <div class="fcon"><a href=""><img src="{{url_for("static",filename='images/sbanner.png')}}" style="opacity: 1; "></a></div>
+                        <div class="fcon"><a href=""><img src="{{url_for("static",filename='images/sbanner.png')}}" style="opacity: 1; "></a> </div>
+                       </div>
+                    <div class="fbg">
+                      <div class="D1fBt" id="D1fBt">
+                        <a href="javascript:void(0)" hidefocus="true" target="_self" class=""><i>1</i></a>
+                        <a href="javascript:void(0)" hidefocus="true" target="_self" class=""><i>2</i></a>
+                        <a href="javascript:void(0)" hidefocus="true" target="_self" class="current"><i>3</i></a>
+                        <a href="javascript:void(0)" hidefocus="true" target="_self" class=""><i>4</i></a>
+                      </div>
+                    </div>
+                    </div>
+				</div>
+				<div class="main-title">
+					近期佳人<span>全城为您找到最靠谱的佳人</span>
+					<a href="">更多></a>
+				</div>
+				<ul class="main-member">
+					<li>
+						<a href="">
+						  <img src="{{url_for("static",filename='images/test.png')}}" />
+						  <p class="mem-num">会员号：00001</p>
+						  <p class="mem-text">25岁  |  本科  |  165CM   <br /> 销售  |  有房</p>
+					    </a>
+					</li>
+				</ul>
+				<div class="main-title">
+					近期熟男<span>全城为您找到最靠谱的帅哥</span>
+					<a href="">更多></a>
+				</div>
+				<ul class="main-member">
+					<li>
+						<a href="">
+						  <img src="images/test2.jpg" />
+						  <p class="mem-num">会员号：00001</p>
+						  <p class="mem-text">25岁  |  本科  |  165CM   <br /> 销售  |  有房</p>
+					    </a>
+					</li>
+					<li>
+						<a href="">
+						  <img src="{{url_for("static",filename='images/test3.png')}}" />
+						  <p class="mem-num">会员号：00001</p>
+						  <p class="mem-text">25岁  |  本科  |  165CM   <br /> 销售  |  有房</p>
+					    </a>
+					</li>
+					<li>
+						<a href="">
+						  <img src="{{url_for("static",filename='images/test3.png')}}" />
+						  <p class="mem-num">会员号：00001</p>
+						  <p class="mem-text">25岁  |  本科  |  165CM   <br /> 销售  |  有房</p>
+					    </a>
+					</li>
+					<li>
+						<a href="">
+						  <img src="images/test2.jpg" />
+						  <p class="mem-num">会员号：00001</p>
+						  <p class="mem-text">25岁  |  本科  |  165CM   <br /> 销售  |  有房</p>
+					    </a>
+					</li>
+
+				</ul>
+			    <div class="main-title">
+					友情链接<span>以下商家为“万家囍”合作伙伴</span>
+					<a href="">更多></a>
+				</div>
+				<ul class="friend-link">
+					<li><a href=""><img src="{{url_for("static",filename='images/link3.png')}}"/></a></li>
+					<li><a href=""><img src="{{url_for("static",filename='images/link1.png')}}"/></a></li>
+					<li><a href=""><img src="{{url_for("static",filename='images/link4.png')}}"/></a></li>
+					<li><a href=""><img src="{{url_for("static",filename='images/link2.png')}}"/></a></li>
+				</ul>
+			</div><!--left-->
+			<div class="main-right"><!--right-->
+				<div class="main-log">
+					<div class="tit">会员登录</div>
+					<div class="main-logbox">
+						<i class="main-user"></i>
+						<input placeholder="账户名" type="text" class="main-user-input" />
+					</div>
+					<div class="main-logbox">
+						<i class="main-password"></i>
+						<input placeholder="密码" type="text" class="main-user-input" />
+					</div>
+					<button type="button"  class="main-btn">立即登录</button>
+					<div class="main-pass-text">没有帐号？<a href="">免费注册</a><a href="" class="forget">忘记密码 ></a></div>
+				</div>
+				<div class="main-radv"><img src="{{url_for("static",filename='images/adv2.png')}}"/></div>
+				<div class="main-radv"><img src="{{url_for("static",filename='images/adv1.png')}}"/></div>
+				<div class="main-message">
+					<div class="tit">通告栏</div>
+					<p>一、请各用电客户尽快与开户银行联系，按照中国人民银行XX分行的统一要求签订《定期借记业务授权委托书》，并于2002年1月31日前将复印件送达所在区供电局。</p>
+					<p>二、部分商业银行由于系统升级原因更改了开户银行账号格式，请客户在签订《定期借记业务授权委托书》的同时与贵开户银行确认新的银行账号，并于2002年1月31日前以正式公函形式通知我局，若届时未受到客户的《定期借记业务授权委托书》及新的银行帐号的，客户将无法使用定期借记方式缴交电费，我局将采取现金方式收取电费。</p>
+					<p>三、由于定期借记业务系统投运后，银行系统将不再代为传递电费票据，故我局将统一采取邮政递送，客户签收的方式派发系统将不再代为传递电费票据，故我局将统一采取邮政递送，客户签收的方式派发</p>
+				</div>
+				<div class="main-message1">
+					<div class="tit">联系我们</div>
+					<div class="main-contact">
+						<p>公司名称：</p>
+						<p>联系人：</p>
+						<p>联系电话：400-400-400</p>
+						<p>电子邮箱：</p>
+						<p>实体店地址：进贤县香江商业街27号</p>
+						<p>南昌万家喜婚恋交友官方微信</p>
+						<p><img src="{{url_for("static",filename='images/weixin.jpg')}}"/></p>
+						<p style="text-align: center;">“ 扫一扫与万家喜亲密互动 ”</p>
+					</div>
+				</div>
+			</div><!--right-->
+			</div>
+</div>
+
+<script type="text/javascript">
+	Qfast.add('widgets', { path: "js/terminator2.2.min.js", type: "js", requires: ['fx'] });
+	Qfast(false, 'widgets', function () {
+		K.tabs({
+			id: 'fsD1', 
+			conId: "D1pic1",  
+			tabId:"D1fBt",  
+			tabTn:"a",
+			conCn: '.fcon',    
+			auto: 1, 
+			effect: 'fade',  
+			eType: 'click', 
+			pageBt:true,
+			bns: ['.prev', '.next'],                      
+			interval: 3000  
+		}) 
+	})  
+</script>
+{% endblock %}
