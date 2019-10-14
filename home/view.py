@@ -1,5 +1,5 @@
 from flask import render_template
-from . import home
+from home import home
 
 @home.route('/login/<int:name>',methods=["GET", "POST"])
 def login(name=None):
