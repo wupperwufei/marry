@@ -11,11 +11,15 @@ class User(db.Model):
     update_time = db.Column(db.DateTime, default=datetime.now)  # 登录时间
     times = db.Column(db.String(30))  # 登录次数
 
+    def __repr__(self):
+        return '<User:%r>' % self.iphone
+
 
 # 用户信息表
 class User_info(db.Model):
     __tablename__ = 'user_info'
-    # user_id = db.Column(db.Integer, index=True,) # 会员号
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)  # 会员号，外键关联用户表id
+    user = db.relationship('User', backref='user_info', uselist=False)  # 一对一
     nickname = db.Column(db.String(20), index=True, unique=True)  # 昵称
     # sex =db.Column(db.String(1)) # 性别
     birth = db.Column(db.DateTime)  # 出生日期
@@ -36,7 +40,8 @@ class User_info(db.Model):
 # 择偶标准
 class Friend(db.Model):
     __tablename__ = 'friend'
-    # user_id=db.Column(db.Integer, index=True) # 会员号
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)  # 会员号，外键关联用户表id
+    user = db.relationship('User', backref='friend', uselist=False)  # 一对一
     f_age = db.Column(db.String(2), default='null')  # 年龄
     f_high = db.Column(db.String(3), default='null')  # 身高
     f_education = db.Column(db.String(2), default='null')  # 学历
@@ -52,7 +57,8 @@ class Story(db.Model):
     title = db.Column(db.String(30), nullable=False)  # 标题
     desc = db.Column(db.String(100), nullable=False)  # 文章描述
     content = db.Column(db.Text, nullable=False)  # 内容
-    # author = db.Column(db.Integer, index=True) # 作者
+    author = db.Column(db.Integer, db.ForeignKey('user_info.nickname'), index=True)  # 作者，外键关联用户表信息表nickname
+    user_info = db.relationship('User_info', backref='story', lazy='dynamic')  # 一对多
     image = db.Column(db.String(255))  # 图片路径
     created_time = db.Column(db.DateTime, default=datetime.now)  # 发布时间
     times = db.Column(db.String(20), default=0)  # 浏览次数
@@ -67,3 +73,6 @@ class Class(db.Model):
     image = db.Column(db.String(100), nullable=False)  # 封面图片路径
     desc = db.Column(db.String(100), nullable=False)  # 描述
     times = db.Column(db.String(20), default=0)  # 点击量
+
+
+db.create_all()
