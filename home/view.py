@@ -7,9 +7,9 @@ from home import home
 #     return render_template('login.html', name=name)
 
 
-@home.route('/reg', methods=["GET", "POST"])
-def reg():
-    return render_template('reg.html')
+# @home.route('/reg', methods=["GET", "POST"])
+# def reg():
+#     return render_template('reg.html')
 
 
 @home.route('/')

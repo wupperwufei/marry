@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from config import  config
 db=SQLAlchemy()
 def create_app(config_name):
-    app=Flask(__name__,static_url_path='/static',static_folder='static/home',)
+    app=Flask(__name__,static_url_path='/static',static_folder='static/home',template_folder='templates/home')
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
     db.init_app(app)

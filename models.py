@@ -7,3 +7,6 @@ class RegistrationForm(Form):
     password = PasswordField('密码')
     password2 = PasswordField('确认密码')
     submit = SubmitField('提交')
+
+
+class user():
