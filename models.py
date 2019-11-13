@@ -7,7 +7,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # 会员号
     iphone = db.Column(db.String(11),  unique=True)  # 手机号
     pwd = db.Column(db.String(32))  # 密码
-    create_time = db.Column(db.DateTime, default=datetime.now)  # 注册时间
+    create_time = db.Column(db.DateTime)  # 注册时间
     update_time = db.Column(db.DateTime, default=datetime.now)  # 登录时间
     times = db.Column(db.String(30))  # 登录次数
     user_info = db.relationship('User_info', backref='User', uselist=False)  # 一对一
