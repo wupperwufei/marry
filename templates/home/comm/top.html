@@ -5,8 +5,13 @@
 		  	 	<a href="" class="top-att">关注万家喜</a>
 		  	 </div>
 		  	 <div class="top-right">
-		  	 	<a href="/login/">注册</a> |
-		  	 	<a href="/reg/">登录</a>
+                 {% if is_login %}
+                 <a href="#">欢迎你{{ is_login }}</a> |
+                 <a href="/logout/">退出登录</a>
+                 {% else %}
+		  	 	<a href="/login/">登录</a> |
+		  	 	<a href="/reg/">注册</a>
+                 {% endif %}
 		  	 </div>
     </div>
       <div class="top-ban">

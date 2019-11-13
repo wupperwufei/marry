@@ -7,10 +7,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # 会员号
     iphone = db.Column(db.String(11),  unique=True)  # 手机号
     pwd = db.Column(db.String(32))  # 密码
-    create_time = db.Column(db.DateTime)  # 注册时间
-    update_time = db.Column(db.DateTime, default=datetime.now)  # 登录时间
-    times = db.Column(db.String(30))  # 登录次数
-    user_info = db.relationship('User_info', backref='User', uselist=False)  # 一对一
+    create_time = db.Column(db.DateTime,default=datetime.now,)  # 注册时间
+    update_time = db.Column(db.DateTime,default=datetime.now,onupdate=datetime.now)  # 登录时间
+    times = db.Column(db.String(30),default=0)  # 登录次数
+    user_info = db.relationship('User_info', backref='user', uselist=False)  # 一对一
     friend = db.relationship('Friend', backref='user', uselist=False)  # 一对一
 
     def __repr__(self):
@@ -21,7 +21,7 @@ class User(db.Model):
 class User_info(db.Model):
     __tablename__ = 'user_info'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),index=True)  # 会员号，外键关联用户表id
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 会员号，外键关联用户表id
     nickname = db.Column(db.String(20),unique=True)  # 昵称
     image = db.Column(db.String(255))  # 头像
     sex = db.Column(db.Enum('m', 'n'))  # 性别
@@ -38,7 +38,7 @@ class User_info(db.Model):
     wechat = db.Column(db.String(30), unique=True, default='null')  # 微信
     email = db.Column(db.String(50), unique=True, default='null')  # 邮箱
     signature = db.Column(db.Text, default='null')  # 个性签名
-    story = db.relationship('Story', backref='user', lazy='dynamic')  # 一对多
+    story = db.relationship('Story', backref='user_info', lazy='dynamic')  # 一对多
 
 
     def __repr__(self):
@@ -62,11 +62,10 @@ class Friend(db.Model):
 class Story(db.Model):
     __tablename__ = 'story'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 文章
     title = db.Column(db.String(30), nullable=False)  # 标题
     desc = db.Column(db.String(100), nullable=False)  # 文章描述
     content = db.Column(db.Text, nullable=False)  # 内容
-    author = db.Column(db.Integer, db.ForeignKey('user.id'))  # 作者，外键关联用户表信息表id
+    author = db.Column(db.Integer, db.ForeignKey('user_info.id'))  # 作者，外键关联用户表信息表id
     image = db.Column(db.String(255))  # 图片路径
     created_time = db.Column(db.DateTime, default=datetime.now)  # 发布时间
     times = db.Column(db.String(20), default=0)  # 浏览次数

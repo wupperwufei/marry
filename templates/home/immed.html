@@ -1,0 +1,299 @@
+{% extends 'comm/comm.html' %}
+{% block css_js %}
+<script src="/static/js/age.js"></script>
+<script>
+        $(".css3-animated-example").collapse({
+          accordion: true,
+          open: function() {
+            this.addClass("open");
+            this.css({ height: this.children().outerHeight() });
+          },
+          close: function() {
+            this.css({ height: "0px" });
+            this.removeClass("open");
+          }
+        });
+        $(function(){
+               $('#submit').click(function(){
+                    $('form').submit()
+               })
+                $('#birth').blur(function(){
+                    var birth=$('#birth').val()
+                    var age=jsGetAge(birth)
+                    $('#age').val(age)
+                    console.log(age)
+                })
+
+        })
+      </script>
+{% endblock %}
+{% block content %}
+		<div class="main">
+			<div class="main-box1">
+				<div class="m-title">个人资料  >></div>
+                <form action="/immed/" method="post" enctype="multipart/form-data">
+				<ul class="condition-list">
+							<li>
+								<p>
+									<span>手&nbsp;&nbsp;机 &nbsp;号：</span>
+									{{ is_login }}
+								</p>
+								<p>
+									<span>身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 高：</span>
+									<select class="conditon-select" name="high">
+										<option value="0">165cm</option>
+										<option value="1">165-170cm</option>
+                                        <option value="2">170-175cm</option>
+                                        <option value="3">175-180cm</option>
+                                        <option value="4">180cm以上</option>
+									</select>
+								</p>
+								<p>
+									<span>从事工作：</span>
+									<select class="conditon-select" name="profession">
+										<option>销售</option>
+										<option>计算机</option>
+									</select>
+								</p>
+							</li>
+							<li>
+								<p>
+									<span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 称：</span>
+									<input type="text" class="conditon-select" name="nickname"/>
+								</p>
+								<p>
+									<span>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 历： </span>
+									<select class="conditon-select" name="education">
+										<option value="0">小学</option>
+                                        <option value="1">初中</option>
+                                        <option value="2">高中</option>
+                                        <option value="3">大学</option>
+                                        <option value="4">硕士</option>
+                                        <option value="5">博士</option>
+                                        <option value="6">院士</option>
+									</select>
+								</p>
+								<p>
+									<span>月&nbsp;&nbsp;收 &nbsp;入： </span>
+									<select class="conditon-select" name="income">
+										<option value="0">1000-3000</option>
+										<option value="1">3000-5000</option>
+                                        <option value="2">5000-8000</option>
+                                        <option value="3">8000-10000</option>
+                                        <option value="4">10000-15000</option>
+                                        <option value="5">20000以上</option>
+									</select>
+								</p>
+
+							</li>
+							<li>
+								<p>
+									<span> 性 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别： </span>
+									<select class="conditon-select" name="sex">
+										<option value="0">男</option>
+										<option value="1">女</option>
+									</select>
+								</p>
+                                <p>
+									<span> 出生年月： </span>
+                                    <input type="date" name="birth" class="conditon-select" id="birth">
+                                    <input type="text" name="age" id="age" style="display:none">
+
+								</p>
+								<p>
+									<span> 住房情况： </span>
+									<select class="conditon-select" name="property">
+										<option value="1">有房</option>
+										<option value="0">无房</option>
+									</select>
+								</p>
+							</li>
+							<li>
+
+							</li>
+						</ul>
+						<ul class="address" style="margin-top: 0;">
+							<li>
+								<p>
+									<span>现居住地：</span>
+									<select class="address-select" name="residence">
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									省
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									市
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									县
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									镇
+								</p>
+							</li>
+							<li>
+								<p>
+									<span> 户 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;籍：</span>
+									<select class="address-select" name="register">
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									省
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									市
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									县
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									镇
+								</p>
+
+							</li>
+							<li>
+								<p>
+									<span>Q&nbsp;&nbsp;Q &nbsp;号： </span>
+									<input type="text" class="conditon-select" name="qq"/>
+                                    <span>微&nbsp;&nbsp;信 &nbsp;号： </span>
+									<input type="text" class="conditon-select" name="wechat"/>
+                                    <span>邮&nbsp;&nbsp;箱 &nbsp;号： </span>
+									<input type="email" class="conditon-select" name="email" />
+								</p>
+								<p>
+									<span>上传真实照片： </span>
+									<input type="file" class="conditon-select" name="image" />
+								</p>
+							</li>
+
+						</ul>
+					<div class="m-title">择偶要求  >></div>
+					<ul class="condition-list">
+							<li>
+								<p>
+									<span>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 龄：</span>
+									<select class="conditon-select" name="f_age">
+										<option value="0">18-25岁</option>
+                                        <option value="1">25-30岁</option>
+                                        <option value="2">30-35岁</option>
+                                        <option value="3">35-40岁</option>
+                                        <option value="4">40-45岁</option>
+                                        <option value="5">45-50岁</option>
+                                        <option value="6">50岁以上</option>
+									</select>
+								</p>
+                                <p>
+									<span>月&nbsp;&nbsp;收 &nbsp;入： </span>
+									<select class="conditon-select" name="f_income">
+										<option value="0">1000-3000</option>
+										<option value="1">3000-5000</option>
+                                        <option value="2">5000-8000</option>
+                                        <option value="3">8000-10000</option>
+                                        <option value="4">10000-15000</option>
+                                        <option value="5">20000以上</option>
+									</select>
+								</p>
+							</li>
+							<li>
+								<p>
+									<span>身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 高：</span>
+									<select class="conditon-select" name="f_high">
+										<option value="0">165cm</option>
+										<option value="1">165-170cm</option>
+                                        <option value="2">170-175cm</option>
+                                        <option value="3">175-180cm</option>
+                                        <option value="4">180cm以上</option>
+									</select>
+								</p>
+
+							</li>
+							<li>
+								<p>
+									<span> 学 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历： </span>
+									<select class="conditon-select" name="f_education">
+										<option value="0">小学</option>
+                                        <option value="1">初中</option>
+                                        <option value="2">高中</option>
+                                        <option value="3">大学</option>
+                                        <option value="4">硕士</option>
+                                        <option value="5">博士</option>
+                                        <option value="6">院士</option>
+									</select>
+								</p>
+
+							</li>
+						</ul>
+
+						<ul class="address">
+							<li>
+								<p>
+									<span>现居住地：</span>
+									<select class="address-select" name="f_register" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									省
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									市
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									县
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									镇
+								</p>
+							</li>
+							<li>
+								<p>
+									<span> 户 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;籍：</span>
+									<select class="address-select" name="f_residence">
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									省
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									市
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									县
+									<select class="address-select" >
+										<option>北京</option>
+										<option>天津</option>
+									</select>
+									镇
+								</p>
+							</li>
+						</ul>
+                        <div class="regwan">
+                            <button id="submit">完成提交</button>
+						<p>（请完整的填写好信息！）</p>
+						</div>
+                </form>
+			</div>
+        </div>
+{% endblock %}

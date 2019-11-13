@@ -8,6 +8,55 @@
 			.login-left{ width: 650px;}
 			.login-left img{ margin: 90px 0px 0px 200px;}
 		</style>
+   <script>
+         $(function(){
+                $('#uphone').blur(function(){
+                      var uphone=$('#uphone').val()
+                      console.log(uphone.length)
+                      if (uphone.length==11){
+                        $.ajax({
+                            url:'/check_phone/',
+                            type:'get',
+                            data:{uphone:$('#uphone').val()},
+                            dataType:'json',
+                            async:true,
+                            success:function(data){
+                                if(data.status){
+                                    console.log(data.mes)
+                                    $('#btn1').removeAttr('disabled','disabled')
+                                }else{
+                                    $('#btn1').attr('disabled','disabled')
+                                }
+                                $('#show').html(data.mes)
+                            }
+                        })
+                      }else{
+                        $('#show').html('手机号格式不正确')
+                        $('#btn1').attr('disabled','disabled')
+                      }
+                })
+        })
+        function register(){
+            var vail=true
+            var uphone=$('#uphone').val()
+            var upass=$('#upass').val()
+            var upass1=$('#upass1').val()
+            var patt=/@/;
+            //console.log(!patt.test(uemail))
+            if(uphone.length!=11){
+                alert('输入的手机号格式不对')
+                $('#uphone').focus()
+                vail=false
+            }else  if(upass==''|| upass1!=upass){
+                alert('输入的密码不一致')
+                $('#upass').val('')
+                $('#upass1').val('')
+                $('#upass').focus()
+                vail=false
+            }
+            return vail
+        }
+    </script>
 {% endblock %}
 {% block content %}
 		<div class="main">
@@ -17,30 +66,25 @@
 					<img src="/static/images/mmlogo.png"  style="margin-left: 30px;"/>
 					<div class="main-log">
 					<div class="tit">免费注册</div>
+                    <form action="/reg/" method="post" onsubmit="return register();">
 					<div class="main-logbox">
 						<i class="main-user1"></i>
-						<input placeholder="手机号码" type="text" class="main-user-input">
+						<input placeholder="手机号码" type="text" name='uphone' id="uphone" class="main-user-input">
+                        <p id="show"></p>
 					</div>
 					<div class="main-logbox">
 						<i class="main-password"></i>
-						<input placeholder="登录密码" type="text" class="main-user-input">
+						<input placeholder="登录密码" type="password" name="upass" id="upass" class="main-user-input">
 					</div>
 					<div class="main-logbox">
 						<i class="main-password"></i>
-						<input placeholder="再次输入密码" type="text" class="main-user-input">
-					</div>
-					<div class="main-logbox" style="border: 0;">
-					     <input type="text" name="code" placeholder="手机验证码" class="yzm">
-					     <button>获取验证码</button>
-					</div>
-					<div class="remember">
-						<input type="checkbox" checked="checked">
-							<label>我同意</label><a>服务协议</a>
+						<input placeholder="再次输入密码" type="password" name="upass1" id='upass1'class="main-user-input">
 					</div>
 					<div class="login-btn">
-						<button>立即注册</button>
-						<a href="">立即登录 ></a>
-					</div>
+						<button id="btn1">立即注册</button>
+						<a href="/login/">立即登录 ></a>
+                    </div>
+                    </form>
 				</div>
 				</div>
 			</div>

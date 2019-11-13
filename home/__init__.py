@@ -1,5 +1,4 @@
 from flask import Blueprint
-home = Blueprint('home', __name__ ,static_folder='../static/home',
-                 template_folder='../templates/home')
+home = Blueprint('home', __name__ )
 from home import view
 
