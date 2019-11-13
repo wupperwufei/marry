@@ -1,15 +1,15 @@
 from flask import render_template
 from home import home
 
-#
-# @home.route('/login/<int:name>', methods=["GET", "POST"])
-# def login(name=None):
-#     return render_template('login.html', name=name)
+
+@home.route('/login/', methods=["GET", "POST"])
+def login():
+    return render_template('login.html')
 
 
-# @home.route('/reg', methods=["GET", "POST"])
-# def reg():
-#     return render_template('reg.html')
+@home.route('/reg/', methods=["GET", "POST"])
+def reg():
+    return render_template('reg.html')
 
 
 @home.route('/')
