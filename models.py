@@ -9,7 +9,7 @@ class User(db.Model):
     pwd = db.Column(db.String(32))  # 密码
     create_time = db.Column(db.DateTime,default=datetime.now,)  # 注册时间
     update_time = db.Column(db.DateTime,default=datetime.now,onupdate=datetime.now)  # 登录时间
-    times = db.Column(db.String(30),default=0)  # 登录次数
+    times = db.Column(db.Integer,default=0)  # 登录次数
     user_info = db.relationship('User_info', backref='user', uselist=False)  # 一对一
     friend = db.relationship('Friend', backref='user', uselist=False)  # 一对一
 
@@ -22,7 +22,7 @@ class User_info(db.Model):
     __tablename__ = 'user_info'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 会员号，外键关联用户表id
-    nickname = db.Column(db.String(20),unique=True)  # 昵称
+    nickname = db.Column(db.String(20))  # 昵称
     image = db.Column(db.String(255))  # 头像
     sex = db.Column(db.Enum('m', 'n'))  # 性别
     birth = db.Column(db.DateTime)  # 出生日期
@@ -34,10 +34,10 @@ class User_info(db.Model):
     property = db.Column(db.String(50), nullable=False)  # 资产
     residence = db.Column(db.String(30), nullable=False)  # 居住地
     register = db.Column(db.String(30), nullable=False)  # 户籍所在地
-    qq = db.Column(db.String(20), unique=True, default='null')  # qq
-    wechat = db.Column(db.String(30), unique=True, default='null')  # 微信
-    email = db.Column(db.String(50), unique=True, default='null')  # 邮箱
-    signature = db.Column(db.Text, default='null')  # 个性签名
+    qq = db.Column(db.String(20), default='')  # qq
+    wechat = db.Column(db.String(30), default='')  # 微信
+    email = db.Column(db.String(50), default='')  # 邮箱
+    signature = db.Column(db.Text, default='')  # 个性签名
     story = db.relationship('Story', backref='user_info', lazy='dynamic')  # 一对多
 
 
@@ -50,9 +50,9 @@ class Friend(db.Model):
     __tablename__ = 'friend'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 会员号，外键关联用户表id
-    f_age = db.Column(db.String(2), default='null')  # 年龄
-    f_high = db.Column(db.String(3), default='null')  # 身高
-    f_education = db.Column(db.String(2), default='null')  # 学历
+    f_age = db.Column(db.String(2), default='')  # 年龄
+    f_high = db.Column(db.String(3), default='')  # 身高
+    f_education = db.Column(db.String(2), default='')  # 学历
     f_income = db.Column(db.String(1))  # 收入
     f_register = db.Column(db.String(30))  # 户籍
     f_residence = db.Column(db.String(30))  # 居住地

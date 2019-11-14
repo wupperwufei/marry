@@ -19,4 +19,9 @@ class DevelopmentConfig(Config):
 config = {
     'default': DevelopmentConfig
 }
-
+config1 = {
+        "accountSid": "",  # 主账户id
+        "appToken": "",  # 令牌
+        "appId": "",  # 应用id
+        "templateId": ""  # 模版id
+    }

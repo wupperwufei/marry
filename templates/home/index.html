@@ -91,19 +91,28 @@
 				</ul>
 			</div><!--left-->
 			<div class="main-right"><!--right-->
+                {% if is_login %}
+                <div class="main-radv"><img src="/static/images/adv2.png"/></div>
+                {% else %}
 				<div class="main-log">
 					<div class="tit">会员登录</div>
+                    <form action="/login/" method="post">
 					<div class="main-logbox">
 						<i class="main-user"></i>
-						<input placeholder="账户名" type="text" class="main-user-input" />
+						<input placeholder="账户名" type="text"  id='uphone' name="uphone" class="main-user-input">
 					</div>
 					<div class="main-logbox">
 						<i class="main-password"></i>
-						<input placeholder="密码" type="text" class="main-user-input" />
+						<input placeholder="密码" type="password" id='upass' name="upass"  class="main-user-input">
 					</div>
-					<button type="button"  class="main-btn">立即登录</button>
-					<div class="main-pass-text">没有帐号？<a href="">免费注册</a><a href="" class="forget">忘记密码 ></a></div>
-				</div>
+					<button type="submit" name="submit" id="btn1" class="main-btn">立即登录</button>
+                    </form>
+					<div class="main-pass-text">没有帐号？
+                        <a href="/reg/">免费注册</a><a href="/findpassword/" class="forget">忘记密码 &gt;</a>
+                    </div>
+
+                    </div>
+                {% endif %}
 				<div class="main-radv"><img src="/static/images/adv2.png"/></div>
 				<div class="main-radv"><img src="/static/images/adv1.png"/></div>
 				<div class="main-message">

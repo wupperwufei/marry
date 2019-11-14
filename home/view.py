@@ -1,7 +1,10 @@
 import hashlib
 import os
+import random
 
-from flask import render_template, request, make_response, Response, redirect, jsonify
+from sms import YunTongXin
+from config import config1
+from flask import render_template, request, make_response, Response, redirect, jsonify, session
 from werkzeug.utils import secure_filename
 
 from home import home
@@ -13,6 +16,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 @home.route('/login/', methods=["GET", "POST"])
 def login():
     if request.method == 'GET':
+        if 'name' in session:
+            is_login = session.get('name')
+            return render_template('index.html', is_login=is_login)
+        if request.cookies.get('name'):
+            is_login = request.cookies.get('name')
+            session['name'] = request.cookies.get('name')
+            return render_template('index.html', is_login=is_login)
         return render_template('login.html')
     else:
         uphone = request.form.get('uphone')
@@ -24,7 +34,14 @@ def login():
         elif user.pwd != md5(upass):
             print('%s密码错误' % uphone)
             return jsonify1({'status': 0, 'mes': '用户名或密码错误'})
-        res = redirect('/immed/')
+        if user.times == 0:
+            res = redirect('/immed/')
+        else:
+            res = redirect('/')
+        update_row = 'update user set times=times+1 where iphone=%s' % (uphone)
+        db.session.execute(update_row)
+        db.session.commit()
+        session['name'] = uphone
         res.set_cookie('name', uphone, 60 * 60 * 24)
         res.set_cookie('id', str(user.id), 60 * 60 * 24)
         return res
@@ -55,20 +72,62 @@ def reg():
 
 @home.route('/')
 def index():
-    is_login = request.cookies.get('name')
+    # is_login = request.cookies.get('name')
+    is_login = session.get('name')
     return render_template('index.html', is_login=is_login)
 
 
 @home.route('/search/')
 def search():
-    is_login = request.cookies.get('name')
+    # is_login = request.cookies.get('name')
+    is_login = session.get('name')
     return render_template('search.html', is_login=is_login)
 
 
 @home.route('/findpassword/')
 def findpwd():
-    is_login = request.cookies.get('name')
-    return render_template('findpassword.html')
+    if request.method == 'GET':
+        return render_template('findpassword.html')
+    else:
+        iphone = request.form.get('uphone')
+        yzm = request.form.get('code')
+        if session.get(iphone) == yzm:
+            return redirect('/updatepassword/')
+        else:
+            print('验证码错误')
+            return render_template('findpassword')
+
+
+@home.route('/updatepassword/')
+def updatepwd():
+    if request.method == 'GET':
+        return render_template('updatepassword.html')
+    else:
+        upass = request.form.get('upass')
+        upass1 = request.form.get('upass1l')
+        id = session.get('name')
+        if upass != upass1:
+            print('两次密码不一致')
+            return jsonify1({'status': 10010, 'mes': '密码填写错误'})
+        user = User.query.filter_by(id=id).first()
+        user.pwd = upass
+        db.session.add(user)
+        db.session.commit()
+        return redirect('/login/')
+
+
+# 发送验证码短信
+@home.route('/get_yzm/')
+def get_yzm():
+    iphone = request.form.get('uphone')
+    code = random.randint(1000, 10000)  # 产生4位验证码
+    yun = YunTongXin(**config1)
+    res = yun.run(iphone, code)
+    print(res)
+    if res.statusCode == 200:
+        session[iphone] = code
+    res1 = {'status': res.statusCode, 'mes': res.statusMsg}
+    return jsonify1(res1)
 
 
 @home.route('/check_phone/')
@@ -86,23 +145,28 @@ def check_phone():
 @home.route('/logout/')
 def logout():
     res = redirect('/')
-    res.delete_cookie('name')
-    res.delete_cookie('id')
+    del session['name']
+    if request.cookies.get('name'):
+        res.delete_cookie('name')
+    if request.cookies.get('id'):
+        res.delete_cookie('id')
     return res
 
 
 @home.route('/immed/', methods=["GET", "POST"])
 def immed():
     if request.method == 'GET':
-        is_login = request.cookies.get('name')
+        # is_login = request.cookies.get('name')
+        is_login = session.get('name')
         if not is_login:
             print('未登录')
             return redirect('/login/')
         else:
-            return render_template('immed.html',is_login=is_login)
+            return render_template('immed.html', is_login=is_login)
     else:
         print(request.form)
-        id = request.cookies.get('id')
+        # id = request.cookies.get('id')
+        id = session.get('name')
         nickname = request.form.get('nickname')
         sex = request.form.get('sex')
         birth = request.form.get('birth')
@@ -110,7 +174,7 @@ def immed():
         high = request.form.get('high')
         image1 = request.files.get('image')
         filename = secure_filename(image1.filename)
-        img=filename
+        img = filename
         image1.save(os.path.join(BASE_DIR + '/static/home/media', filename))
         education = request.form.get('education')
         profession = request.form.get('profession')
