@@ -1,154 +1,53 @@
 {% extends 'comm/comm.html' %}
+{% block css_js %}
+<script>
+    $(function(){
+        $('.search-btn').click(function(){
+            var val=$('#search_input').val()
+            window.location.href="http://127.0.0.1:5000/search/?val="+val;
+        })
+      })
+</script>
+{% endblock %}
 {% block content %}
 		<div class="main">
 			<div class="main-box1">
 			<div class="main-left"><!--left-->
 				<div class="search-top">
 					<div class="search">
-						<input type="text" placeholder="更多心仪对象，请搜索" />
+						<input type="text" placeholder="更多心仪对象，请搜索" id="search_input" />
 						<button class="search-btn"><img src="/static/images/search.png"/></button>
 					</div>
-					<ul class="search-find">
-						<li>
-							<span>我要找：</span>
-							<select>
-								<option>男朋友</option>
-								<option>女朋友</option>
-							</select>
-						</li>
-						<li>
-							<span>出生年月：</span>
-							<select>
-								<option>1990</option>
-								<option>1991</option>
-							</select>
-						</li>
-					</ul>
-					<button class="s-btn">搜索</button>
 				</div>
-				<ul class="find-infor">
-					<li>
-						<span>户&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;籍</span>
-						<div class="infor-link">
-							<a href="" class="cur">不限</a>
-							<a href="">本地 </a>
-							<a href="">南昌县</a>
-							<a href="">西湖区</a>
-							<a href="">东湖区 </a>
-							<a href="">新建县</a>
-							<a href="">安义县</a>
-							<a href="">湾里区 </a>
-						</div>
-					</li>
-					<li>
-						<span>出生年月</span>
-						<div class="infor-link">
-							<a href="" class="cur">不限</a>
-							<a href="">90后</a>
-							<a href="">80后</a>
-							<a href="">70后</a>
-						</div>
-					</li>
-					<li>
-						<span>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历</span>
-						<div class="infor-link">
-							<a href="" class="cur">不限</a>
-							<a href="">高中及以下</a>
-							<a href="">专科</a>
-							<a href="">本科 </a>
-							<a href="">硕士 </a>
-							<a href="">博士  </a>
-						</div>
-					</li>
-					<li>
-						<span>婚姻状况</span>
-						<div class="infor-link">
-							<a href="" class="cur">不限</a>
-							<a href="">未婚</a>
-							<a href="">离异无孩</a>
-							<a href="">离异有孩 </a>
-							<a href="">丧偶</a>
-						</div>
-					</li>
-					<li>
-						<span>从事地方</span>
-						<div class="infor-link">
-							<a href="" class="cur">不限</a>
-							<a href="">本地 </a>
-							<a href="">北京</a>
-							<a href="">上海</a>
-							<a href="">广东</a>
-							<a href="">杭州 </a>
-							<a href="">重庆 </a>
-							<a href="">云南</a>
-							
-						</div>
-					</li>
-					<li>
-						<span>从事工作</span>
-						<div class="infor-link">
-							<a href="" class="cur">不限</a>
-							<a href="">销售 </a>
-							<a href="">互联网</a>
-							<a href="">账务</a>
-							<a href="">教育培训</a>
-							<a href="">翻译  </a>
-							<a href="">管理    </a>
-							<a href="">医疗 </a>
-							<a href="">酒店 </a>
-						</div>
-					</li>
-					<li>
-						<span>月 &nbsp;收 &nbsp;入</span>
-						<div class="infor-link">
-							<a href="" class="cur">不限</a>
-							<a href="">3万以下 </a>
-							<a href="">3万以下</a>
-							<a href="">5-8万 </a>
-							<a href="">8-12万</a>
-							<a href="">12-18万</a>
-							<a href="">18-30万    </a>
-							<a href="">30-100万 </a>
-						</div>
-					</li>
-					<li>
-						<span>住&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;房</span>
-						<div class="infor-link">
-							<a href="" class="cur">不限</a>
-							<a href="">必须有房 </a>
-						</div>
-					</li>
-				</ul>
 				<ul class="sequence">
 					<li><a href="" class="sort_a"><i class="sort_a1">综合排序</i></a></li>
 					<li><a href="" class="sort_a"><i class="sort_a1">最新会员  </i></a></li>
 					<li><a href="" class="sort_a"><i class="sort_a1">魅力值</i></a></li>
 				</ul>
 				<ul class="main-member">
+                    {% for user in paginate1 %}
 					<li>
-						<a href="">
-						  <img src="/static/images/test.png">
-						  <p class="mem-num">会员号：00001</p>
-						  <p class="mem-text">25岁  |  本科  |  165CM   <br> 销售  |  有房</p>
+						<a href="#">
+						  <img src="/static/media/{{user.image}}">
+						  <p class="mem-num">{{user.nickname}}</p>
+						  <p class="mem-text"> |  本科  |  165CM   <br> 销售  |  有房</p>
 					    </a>
 					</li>
-					<li>
-						<a href="">
-						  <img src="/static/images/test1.png">
-						  <p class="mem-num">会员号：00001</p>
-						  <p class="mem-text">25岁  |  本科  |  165CM   <br> 销售  |  有房</p>
-					    </a>
-					</li>
+                    {% endfor %}
 				</ul>
 				<div class="page">
-					<a href="" class="cur">1</a>
-					<a href="">2</a>
-					<a href="">3</a>
-					<a href="">4</a>
-					<a href="">5</a>
-					<span>...</span>
-					<a href="">24</a>
-					<a href="">下一页</a>
+        {% if paginate.has_prev %}
+        <a href="/search/?page={{ paginate.prev_num }}">上一页</a>
+    {% endif %}
+
+    {% for i in paginate.iter_pages() %}
+        <a href="/search/?page={{ i }}">{{ i }}</a>
+    {% endfor %}
+
+    {% if paginate.has_next %}
+        <a href="/search/?page={{ paginate.next_num }}">下一页</a>
+    {% endif %}
+
 				</div>
 			</div><!--left-->
 			<div class="main-right"><!--right-->

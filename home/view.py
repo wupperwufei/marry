@@ -81,7 +81,19 @@ def index():
 def search():
     # is_login = request.cookies.get('name')
     is_login = session.get('name')
-    return render_template('search.html', is_login=is_login)
+    page = int(request.args.get('page', 1))
+    val = request.args.get('val')
+    data = []
+    if not val:
+        user_list = User.query.order_by('create_time').paginate(page=page, per_page=1)
+        for user in user_list.items:
+            info = User_info.query.filter_by(user_id=user.id).first()
+            data.append(info)
+            print(data)
+    else:
+        user_list= User_info.query.filter_by(nickname=val).paginate(page=page, per_page=1)
+        data=user_list.items
+    return render_template('search.html', is_login=is_login, paginate1=data, paginate=user_list)
 
 
 @home.route('/findpassword/')
@@ -164,7 +176,7 @@ def immed():
         else:
             return render_template('immed.html', is_login=is_login)
     else:
-        print(request.form)
+        # print(request.form)
         # id = request.cookies.get('id')
         id = session.get('name')
         user = User.query.filter_by(iphone=id).first()
@@ -175,7 +187,7 @@ def immed():
         high = request.form.get('high')
         image1 = request.files.get('image')
         filename = secure_filename(image1.filename)
-        img = filename
+        img = str(filename)
         image1.save(os.path.join(BASE_DIR + '/static/home/media', filename))
         education = request.form.get('education')
         profession = request.form.get('profession')
