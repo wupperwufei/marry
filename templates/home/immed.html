@@ -1,18 +1,57 @@
 {% extends 'comm/comm.html' %}
 {% block css_js %}
 <script src="/static/js/age.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/Popt.js"></script>
+<script type="text/javascript" src="/static/js/city.json.js"></script>
+<script type="text/javascript" src="/static/js/citySet.js"></script>
+<style type="text/css">
+* { -ms-word-wrap: break-word; word-wrap: break-word; }
+html { -webkit-text-size-adjust: none; text-size-adjust: none; }
+html, body {height:99%;width:99%; }
+.wrap{width:464px;height:34px;margin:20px auto;border:0;position:relative;}
+.input{position:absolute;top:0;left:0;width:457px;margin:0;padding-left:5px;height:30px;line-height:30px;font-size:12px;border:1px solid #c9cacb;}
+s{position:absolute;top:1px;right:0;width:32px;height:32px;background:url("/static/images/arrow.png") no-repeat;}
+._citys { width: 450px; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative; }
+._citys span { color: #05920a; height: 15px; width: 15px; line-height: 15px; text-align: center; border-radius: 3px; position: absolute; right: 10px; top: 10px; border: 1px solid #05920a; cursor: pointer; }
+._citys0 { width: 95%; height: 34px; line-height: 34px; display: inline-block; border-bottom: 2px solid #05920a; padding: 0px 5px; font-size:14px; font-weight:bold; margin-left:6px; }
+._citys0 li { display: inline-block; line-height: 34px; font-size: 15px; color: #888; width: 80px; text-align: center; cursor: pointer; }
+._citys1 { width: 100%; display: inline-block; padding: 10px 0; }
+._citys1 a { width: 83px; height: 35px; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 6px; margin-top: 3px; line-height: 35px; text-align: center; cursor: pointer; font-size: 12px; border-radius: 5px; overflow: hidden; }
+._citys1 a:hover { color: #fff; background-color: #05920a; }
+.AreaS { background-color: #05920a !important; color: #fff !important; }
+</style>
+<script type="text/javascript">
+$(function(){
+	$("#city").click(function (e) {
+	SelCity(this,e);
+	});
+	$("#s").click(function (e) {
+		SelCity(document.getElementById("city"),e);
+	});
+	$("#city1").click(function (e) {
+	SelCity(this,e);
+	});
+	$("#s1").click(function (e) {
+		SelCity(document.getElementById("city1"),e);
+	});
+	$("#city2").click(function (e) {
+	SelCity(this,e);
+	});
+	$("#s2").click(function (e) {
+		SelCity(document.getElementById("city2"),e);
+	});
+	$("#city3").click(function (e) {
+	SelCity(this,e);
+	});
+	$("#s3").click(function (e) {
+		SelCity(document.getElementById("city3"),e);
+	});
+
+})
+</script>
+
 <script>
-        $(".css3-animated-example").collapse({
-          accordion: true,
-          open: function() {
-            this.addClass("open");
-            this.css({ height: this.children().outerHeight() });
-          },
-          close: function() {
-            this.css({ height: "0px" });
-            this.removeClass("open");
-          }
-        });
         $(function(){
                $('#submit').click(function(){
                     $('form').submit()
@@ -25,7 +64,7 @@
                 })
 
         })
-      </script>
+  </script>
 {% endblock %}
 {% block content %}
 		<div class="main">
@@ -113,56 +152,25 @@
 							</li>
 						</ul>
 						<ul class="address" style="margin-top: 0;">
-							<li>
+							<li style="HEIGHT: 85px;">
 								<p>
-									<span>现居住地：</span>
-									<select class="address-select" name="residence">
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									省
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									市
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									县
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									镇
+									<span> 现居住地：</span>
+								<div class="wrap" style="left:-280px;top:-20px; z-index:55;">
+									<input class="input" name="residence" class="city" id="city"  type="text"
+										   placeholder="请选择"
+										   autocomplete="off" readonly="true"><s id="s"></s>
+								</div>
 								</p>
 							</li>
-							<li>
+							<li style="HEIGHT: 45px;">
 								<p>
-									<span> 户 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;籍：</span>
-									<select class="address-select" name="register">
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									省
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									市
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									县
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									镇
+									<span> 现居住地：</span>
+								<div class="wrap" style="left:-280px;top:-45px; z-index:55;">
+									<input class="input" name="register" class="city1" id="city1"   type="text"
+										   placeholder="请选择"
+										   autocomplete="off" readonly="true"><s id="s1"></s>
+								</div>
 								</p>
-
 							</li>
 							<li>
 								<p>
@@ -238,54 +246,24 @@
 						</ul>
 
 						<ul class="address">
-							<li>
+							<li style="HEIGHT: 75px;">
 								<p>
-									<span>现居住地：</span>
-									<select class="address-select" name="f_register" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									省
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									市
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									县
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									镇
+									<span> 现居住地：</span>
+								<div class="wrap" style="left:-280px;top:-30px; z-index:55;">
+									<input class="input" name="f_residence" class="city2" id="city2"  type="text"
+										   placeholder="请选择"
+										   autocomplete="off" readonly="true"><s id="s2"></s>
+								</div>
 								</p>
 							</li>
-							<li>
+							<li >
 								<p>
-									<span> 户 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;籍：</span>
-									<select class="address-select" name="f_residence">
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									省
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									市
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									县
-									<select class="address-select" >
-										<option>北京</option>
-										<option>天津</option>
-									</select>
-									镇
+									<span> 现居住地：</span>
+								<div class="wrap" style="left:-280px;top:-40px; z-index:55;">
+									<input class="input" name="f_register" class="city3" id="city3"   type="text"
+										   placeholder="请选择"
+										   autocomplete="off" readonly="true"><s id="s3"></s>
+								</div>
 								</p>
 							</li>
 						</ul>
@@ -296,4 +274,5 @@
                 </form>
 			</div>
         </div>
+
 {% endblock %}

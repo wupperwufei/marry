@@ -5,11 +5,11 @@ from datetime import datetime
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)  # 会员号
-    iphone = db.Column(db.String(11),  unique=True)  # 手机号
+    iphone = db.Column(db.String(11), unique=True)  # 手机号
     pwd = db.Column(db.String(32))  # 密码
-    create_time = db.Column(db.DateTime,default=datetime.now,)  # 注册时间
-    update_time = db.Column(db.DateTime,default=datetime.now,onupdate=datetime.now)  # 登录时间
-    times = db.Column(db.Integer,default=0)  # 登录次数
+    create_time = db.Column(db.DateTime, default=datetime.now, )  # 注册时间
+    update_time = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)  # 登录时间
+    times = db.Column(db.Integer, default=0)  # 登录次数
     user_info = db.relationship('User_info', backref='user', uselist=False)  # 一对一
     friend = db.relationship('Friend', backref='user', uselist=False)  # 一对一
 
@@ -39,7 +39,6 @@ class User_info(db.Model):
     email = db.Column(db.String(50), default='')  # 邮箱
     signature = db.Column(db.Text, default='')  # 个性签名
     story = db.relationship('Story', backref='user_info', lazy='dynamic')  # 一对多
-
 
     def __repr__(self):
         return '<User_info:%r>' % self.nickname
@@ -80,4 +79,3 @@ class Class(db.Model):
     image = db.Column(db.String(100), nullable=False)  # 封面图片路径
     desc = db.Column(db.String(100), nullable=False)  # 描述
     times = db.Column(db.String(20), default=0)  # 点击量
-

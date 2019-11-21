@@ -167,6 +167,7 @@ def immed():
         print(request.form)
         # id = request.cookies.get('id')
         id = session.get('name')
+        user = User.query.filter_by(iphone=id).first()
         nickname = request.form.get('nickname')
         sex = request.form.get('sex')
         birth = request.form.get('birth')
@@ -192,12 +193,12 @@ def immed():
         f_register = request.form.get('f_register')
         f_residence = request.form.get('f_residence')
         try:
-            user_info = User_info(user_id=id, nickname=nickname, image=img,
+            user_info = User_info(user_id=user.id, nickname=nickname, image=img,
                                   sex=sex, birth=birth, age=age, high=high, education=education,
                                   profession=profession, income=income, property=property,
                                   residence=residence, register=register, qq=qq, wechat=wechat,
                                   email=email)
-            friend = Friend(user_id=id, f_age=f_age, f_high=f_high, f_education=f_education,
+            friend = Friend(user_id=user.id, f_age=f_age, f_high=f_high, f_education=f_education,
                             f_income=f_income, f_register=f_register, f_residence=f_residence,
                             )
             db.session.add(user_info)
