@@ -82,13 +82,18 @@ def search():
     # is_login = request.cookies.get('name')
     is_login = session.get('name')
     page = int(request.args.get('page', 1))
-    user_list = User.query.order_by('create_time').paginate(page=page, per_page=1)
+    val = request.args.get('val')
     data = []
-    for user in user_list.items:
-        info = User_info.query.filter_by(user_id=user.id).first()
-        data.append(info)
-        print(data)
-    return render_template('search.html', is_login=is_login,paginate1=data,paginate=user_list)
+    if not val:
+        user_list = User.query.order_by('create_time').paginate(page=page, per_page=1)
+        for user in user_list.items:
+            info = User_info.query.filter_by(user_id=user.id).first()
+            data.append(info)
+            print(data)
+    else:
+        user_list= User_info.query.filter_by(nickname=val).paginate(page=page, per_page=1)
+        data=user_list.items
+    return render_template('search.html', is_login=is_login, paginate1=data, paginate=user_list)
 
 
 @home.route('/findpassword/')

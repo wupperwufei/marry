@@ -25,8 +25,8 @@ class User_info(db.Model):
     nickname = db.Column(db.String(20))  # 昵称
     image = db.Column(db.String(255))  # 头像
     sex = db.Column(db.Enum('m', 'n'))  # 性别
-    birth = db.Column(db.DateTime)  # 出生日期
-    age = db.Column(db.String(2))  # 年龄
+    birth = db.Column(db.DateTime,default='')  # 出生日期
+    age = db.Column(db.String(2),default='')  # 年龄
     high = db.Column(db.String(3), nullable=False)  # 身高
     education = db.Column(db.String(2), nullable=False)  # 学历
     profession = db.Column(db.String(20), nullable=False)  # 职业
