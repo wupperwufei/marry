@@ -37,15 +37,15 @@
 				</ul>
 				<div class="page">
         {% if paginate.has_prev %}
-        <a href="/search/?page={{ paginate.prev_num }}">上一页</a>
+        <a href="/search/?page={{ paginate.prev_num }}&val={{ val }}">上一页</a>
     {% endif %}
 
     {% for i in paginate.iter_pages() %}
-        <a href="/search/?page={{ i }}">{{ i }}</a>
+        <a href="/search/?page={{ i }}&val={{ val }}">{{ i }}</a>
     {% endfor %}
 
     {% if paginate.has_next %}
-        <a href="/search/?page={{ paginate.next_num }}">下一页</a>
+        <a href="/search/?page={{ paginate.next_num }}&val={{ val }}">下一页</a>
     {% endif %}
 
 				</div>

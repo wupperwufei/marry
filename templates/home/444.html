@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .a{
+            background:url({{url_for('static',filename='images/1.jpg')}})
+        }
+        .c{
+
+        display: block;
+        position: relative;
+        top: 130px;
+        text-align: center;
+        background: red;
+
+        }
+    </style>
+
+    <script type="text/javascript" src="/static/js/jquery-1.11.3.js"></script>
+
+    <script>
+        $(function(){
+            $('.a').mouseover(function(){
+                $(this).children('.c').show()
+            })
+            $('.a').mouseout(function(){
+                $(this).children('.c').hide()
+            })
+        })
+
+    </script>
+</head>
+<body>
+<div class="x">
+    <div class="a" style="width:183px;height:163px;border:red dashed 2px;">
+        <p class="c" style="display:none;">三星手机</p>
+    </div>
+    <p class="d">图片</p>
+</div>
+<div class="x">
+    <div class="a" style="width:183px;height:163px;border:red dashed 2px;">
+        <p class="c" style="display:none;">三星手机</p>
+    </div>
+    <p class="d">图片</p>
+</div>
+<div class="x">
+    <div class="a" style="width:183px;height:163px;border:red dashed 2px;">
+        <p class="c" style="display:none;">三星手机</p>
+    </div>
+    <p class="d">图片</p>
+</div>
+</body>
+</html>

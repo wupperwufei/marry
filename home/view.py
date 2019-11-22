@@ -91,9 +91,9 @@ def search():
             data.append(info)
             print(data)
     else:
-        user_list= User_info.query.filter_by(nickname=val).paginate(page=page, per_page=1)
-        data=user_list.items
-    return render_template('search.html', is_login=is_login, paginate1=data, paginate=user_list)
+        user_list = User_info.query.filter(User_info.nickname.like('%' + val + '%')).paginate(page=page, per_page=1)
+        data = user_list.items
+    return render_template('search.html', is_login=is_login, paginate1=data, paginate=user_list, val=val)
 
 
 @home.route('/findpassword/')
@@ -220,6 +220,11 @@ def immed():
             print(e)
             return Response('用户信息提交失败')
         return redirect('/')
+
+
+@home.route('/story/')
+def story():
+    return render_template('444.html')
 
 
 def md5(data):
