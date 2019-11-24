@@ -424,7 +424,10 @@ overflow: hidden;display: block!important;-webkit-transform: translateZ(0);-webk
 
 
 
-
-
+.photo{width: 183px;height:163px; float:left ;  border: solid 5px white;}
+.title{
+        position:absolute;
+         bottom:330px ;
+        }
 
 

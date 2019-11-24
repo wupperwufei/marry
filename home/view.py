@@ -8,9 +8,25 @@ from flask import render_template, request, make_response, Response, redirect, j
 from werkzeug.utils import secure_filename
 
 from home import home
-from models import User, db, User_info, Friend
+from models import User, db, User_info, Friend,Class
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+@home.route('/classmate/')
+def classmate():
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 2))
+    paginate = Class.query.order_by('id').paginate(page, per_page, error_out=False)
+    video = paginate.items
+    return render_template('classmate.html', paginate=paginate, video=video)
+
+
+
+
+
+
+
+
 
 
 @home.route('/login/', methods=["GET", "POST"])
