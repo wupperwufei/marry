@@ -22,11 +22,14 @@ def classmate():
 
 
 
-
-
-
-
-
+@home.route('/classmarry/')
+def classmarry():
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 2))
+    paginate = Class.query.order_by('id').paginate(page, per_page, error_out=False)
+    video = paginate.items
+    print(video,1111)
+    return render_template('classmarry.html', paginate=paginate, video=video)
 
 
 @home.route('/login/', methods=["GET", "POST"])

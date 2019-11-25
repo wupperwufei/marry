@@ -7,25 +7,22 @@
 					<div class="col c2"><!--menu-->
 					<div class="list-top"><a href="" class="cur">恋爱教学视频</a></div>
 					<div class="list-top"
-                         style="border-bottom: 0;"><a href="">恋爱小技巧</a></div>
+                         style="border-bottom: 0;"><a href="/classmarry/">恋爱小技巧</a></div>
 					</div><!--menu-->
 					</div><!--right-->
 					<div class="main-left"><!--left-->
 						<div class="s-address">当前位置：<a href="">首页 </a>&gt; 婚恋课堂 &gt; 恋爱教学视频</div>
-						<ul class="class1">
+						<ul class="success">
 							<li>
 
-								<a href="http://www.baidu.com" class="photo" title="视频介绍"><img
-										src="/static/images/1.jpg" >
-								<p class="title">标题</p>
-
+								{% for v in video %}
+								<a href="https://www.bilibili.com/video/av75561787/" class="photo" title="视频内容介绍"><img
+										src="/static/images/{{v.image}}"/>视频标题
 								</a>
 
-								<a href="http://www.baidu.com"class="photo" title="视频介绍"><img
-										src="/static/images/1.jpg" >
-								<p class="title">标题</p>
+								{% endfor %}
 
-								</a>
+
 
 							</li>
 
