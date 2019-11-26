@@ -203,7 +203,8 @@ i{ font-style: normal;}
 .search-find select{ color: #fff; font-size: 16px; border: 1px solid #ddd; width: 115px; height: 30px; background: transparent;}
 .search-find select option{ background: #666;}
 .search-find span{ font-size: 18px; color: #fff;}
-.s-btn{ background: #eb6877; color: #fff; float: right; border: 0; font-size: 18px; width: 120px; margin-top: 15px; margin-right: 15px; line-height: 30px;}
+.s-btn{ background: #eb6877; color: #fff; float: right; border: 0; font-size: 18px; width: 120px; margin-top: 15px;
+margin-right: 15px; line-height: 30px;}
 
 .find-infor{ overflow: hidden; margin:20px 0; border: 1px solid #BFBFBF;}
 .find-infor li{ border-bottom: 1px dashed #BFBFBF; line-height: 40px; overflow: hidden;}

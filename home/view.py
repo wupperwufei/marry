@@ -1,12 +1,13 @@
 import hashlib
+import json
 import os
 import random
 
 from sms import YunTongXin
 from config import config1
-from flask import render_template, request, make_response, Response, redirect, jsonify, session
+from flask import render_template, request, Response, redirect, jsonify, session
 from werkzeug.utils import secure_filename
-
+from sqlalchemy import extract
 from home import home
 from models import User, db, User_info, Friend
 
@@ -77,12 +78,144 @@ def index():
     return render_template('index.html', is_login=is_login)
 
 
-@home.route('/search/')
+@home.route('/search/',methods=["GET", "POST"])
 def search():
-    # is_login = request.cookies.get('name')
+    #判断是否用户是否登录,登录则显示用户名
     is_login = session.get('name')
-    return render_template('search.html', is_login=is_login)
+    user_new = User.query.order_by(User.update_time.desc())
+    new_list = []
+    for i in range(2):
+        new_user = User_info.query.filter_by(user_id=user_new[i].id).first()
+        new_list.append(new_user)
 
+    """
+    搜索功能
+    """
+    try:
+        if request.method == 'GET':
+            page = int(request.args.get('page',1))
+            user_list = User.query.order_by(User.create_time.desc()).paginate(page=page,per_page=2)
+
+            page_data = []
+            for i in user_list.items:
+                data = User_info.query.filter_by(user_id=i.id).first()
+                page_data.append(data)
+
+            return render_template("search.html", page_data=page_data,paginate=user_list,new_list=new_list,is_login=is_login)
+
+        elif request.method == 'POST':
+            #获取json数据并解析
+            data = json.loads(request.form.get('data',''))
+            op_text = data['option']
+            op_gender = data['op_gender']
+            op_birth = data['op_birth']
+            page = data['page']
+            order = data['order']
+            print(op_text)
+            print(op_gender)
+            print(op_birth)
+            print(page)
+            print(order)
+
+            #对性别字符进行处理
+            if op_gender == '男朋友':
+                op_gender = 'M'
+            else:
+                op_gender = 'F'
+
+            #判断是否需要进行特定的排序
+            if order == '':  #不需要对特定的字段进行排序显示
+                #筛选数据库中符合的用户的信息，并进行分页
+                option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%") if op_text is not None else "",extract('year', User_info.birth)== op_birth,User_info.sex==op_gender).paginate(page=page, per_page=2)
+                print(option_user.items)
+
+                if option_user:
+                    opt_list = []
+                    # 按照最新登录时间进行顺序匹配
+                    for u in user_new:
+                        for user in option_user.items:
+                            if user.user_id == u.id:
+                                opt_list.append(user)
+                    print(opt_list)
+                    # 总页数
+                    total = option_user.total
+                    print(total)
+
+                    page_data = Ajax_send(opt_list,total,page,order)
+                    return jsonify({'code': 200, 'data': page_data})
+                else:
+                    return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
+            elif order in ['high','property','times']:
+                if order == 'high':  #需要进行高度降序排列
+                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year',User_info.birth) == op_birth, User_info.sex == op_gender).order_by(User_info.high.desc()).paginate(page=page,per_page=2)
+                    print(option_user.items)
+                    if option_user:
+                        # 总页数
+                        total = option_user.total
+                        print(total)
+
+                        page_data = Ajax_send(option_user.items, total, page, order)
+                        return jsonify({'code': 200, 'data': page_data})
+
+                    else:
+                        return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
+
+                elif order == 'property':  #需要进行高度降序排列
+                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year',User_info.birth) == op_birth, User_info.sex == op_gender).order_by(User_info.property.desc).paginate(page=page,per_page=2)
+                    print(option_user.items)
+                    if option_user:
+                        # 总页数
+                        total = option_user.total
+                        print(total)
+
+                        page_data = Ajax_send(option_user.items, total, page, order)
+                        return jsonify({'code': 200, 'data': page_data})
+
+                    else:
+                        return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
+
+                elif order == 'times':  #需要进行高度降序排列
+                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year', User_info.birth) == op_birth,User_info.sex == op_gender).paginate(page=page, per_page=2)
+                    user = User.query.order_by(User.times.desc)
+                    if option_user:
+                        opt_list = []
+                        for u in user:
+                            for user in option_user.items:
+                                if user.user_id == u.id:
+                                    opt_list.append(user)
+                        print(opt_list)
+                        # 总页数
+                        total = option_user.total
+                        print(total)
+
+                        page_data = Ajax_send(opt_list, total, page, order)
+                        return jsonify({'code': 200, 'data': page_data})
+                    else:
+                        return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
+            else:
+                return jsonify({'code': 10009, 'data': {'error': "操作出错,请重试"}})
+    except Exception as e:
+        print('fail', e)
+        return render_template("search.html")
+
+def Ajax_send(opt_list,total,page,order):
+    # 遍历出来所有选择的用户信息，发送给前端
+    page_data = []
+    for i in opt_list:
+        d = {}
+        d['image'] = i.image
+        d['nickname'] = i.nickname
+        d['age'] = i.age
+        d['education'] = i.education
+        d['high'] = i.high
+        d['profession'] = i.profession
+        d['property'] = i.property
+        d['total'] = total
+        d['page'] = page
+        d['order'] = order
+        page_data.append(d)
+    print(page_data)
+    return page_data
 
 @home.route('/findpassword/')
 def findpwd():

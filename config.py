@@ -13,6 +13,7 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:123456@127.0.0.1:3306/marry'
+    # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:921118@127.0.0.1:3306/marry'
     DEBUG = True
 
 
