@@ -224,7 +224,7 @@ def immed():
 
 @home.route('/story/')
 def story():
-    return render_template('444.html')
+    return render_template('story.html')
 
 
 def md5(data):
