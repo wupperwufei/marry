@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="83c28a6c-2969-480b-a0c8-e01ac1a4e8de" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/marry/ff.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/marry/static/home/js/search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/marry/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/marry/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/home/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/marry/home/view.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/migrations/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/migrations/alembic.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/migrations/env.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/migrations/script.py.mako" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/migrations/versions/bf350d6acc44_.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/marry/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/static/home/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/marry/static/home/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/static/home/images/test2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/templates/home/comm/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/marry/templates/home/comm/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/templates/home/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/marry/templates/home/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/alembic" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/alembic" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/easy_install" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/easy_install" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/easy_install-3.6" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/easy_install-3.6" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/flask" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/flask" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/mako-render" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/mako-render" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/pip" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/pip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/pip3" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/pip3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/pip3.6" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/pip3.6" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/python" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/python" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/python3" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/python3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/bin/python3.6" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/bin/python3.6" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/editor.py" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/editor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/markupsafe/_speedups.cpython-36m-x86_64-linux-gnu.so" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/markupsafe/_speedups.cpython-36m-x86_64-linux-gnu.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/pip-10.0.1-py3.6.egg/pip/_vendor/distlib/t32.exe" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/pip-10.0.1-py3.6.egg/pip/_vendor/distlib/t32.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/pip-10.0.1-py3.6.egg/pip/_vendor/distlib/t64.exe" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/pip-10.0.1-py3.6.egg/pip/_vendor/distlib/t64.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/pip-10.0.1-py3.6.egg/pip/_vendor/distlib/w32.exe" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/pip-10.0.1-py3.6.egg/pip/_vendor/distlib/w32.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/pip-10.0.1-py3.6.egg/pip/_vendor/distlib/w64.exe" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/pip-10.0.1-py3.6.egg/pip/_vendor/distlib/w64.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/python_editor-1.0.4.dist-info/DESCRIPTION.rst" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/python_editor-1.0.4.dist-info/DESCRIPTION.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/python_editor-1.0.4.dist-info/METADATA" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/python_editor-1.0.4.dist-info/METADATA" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/python_editor-1.0.4.dist-info/WHEEL" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/python_editor-1.0.4.dist-info/WHEEL" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/python_editor-1.0.4.dist-info/metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/python_editor-1.0.4.dist-info/metadata.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/python_editor-1.0.4.dist-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/python_editor-1.0.4.dist-info/top_level.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/sqlalchemy/cprocessors.cpython-36m-x86_64-linux-gnu.so" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/sqlalchemy/cprocessors.cpython-36m-x86_64-linux-gnu.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/sqlalchemy/cresultproxy.cpython-36m-x86_64-linux-gnu.so" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/sqlalchemy/cresultproxy.cpython-36m-x86_64-linux-gnu.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/sqlalchemy/cutils.cpython-36m-x86_64-linux-gnu.so" beforeDir="false" afterPath="$PROJECT_DIR$/marry/venv/lib/python3.6/site-packages/sqlalchemy/cutils.cpython-36m-x86_64-linux-gnu.so" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/marry" />
+  </component>
+  <component name="ProjectId" id="1U16YXFmYTszktYT5ADrEOwY668" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../marry1124" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="83c28a6c-2969-480b-a0c8-e01ac1a4e8de" name="Default Changelist" comment="" />
+      <created>1574511801157</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1574511801157</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
