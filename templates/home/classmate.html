@@ -1,0 +1,50 @@
+{% extends 'comm/comm.html' %}
+{% block content %}
+			<div class="main">
+				<div class="main-box1">
+					<div class="main-right" style="margin-left: 0; margin-right: 14px;"><!--right-->
+					<div class="list-main1-title">婚恋课堂</div>
+					<div class="col c2"><!--menu-->
+					<div class="list-top"><a href="" class="cur">恋爱教学视频</a></div>
+					<div class="list-top"
+                         style="border-bottom: 0;"><a href="/classmarry/">恋爱小技巧</a></div>
+					</div><!--menu-->
+					</div><!--right-->
+					<div class="main-left"><!--left-->
+						<div class="s-address">当前位置：<a href="">首页 </a>&gt; 婚恋课堂 &gt; 恋爱教学视频</div>
+						<ul class="success">
+							<li>
+
+								{% for v in video %}
+								<a href="https://www.bilibili.com/video/av75561787/" class="photo" title="视频内容介绍"><img
+										src="/static/images/{{v.image}}"/>视频标题
+								</a>
+
+								{% endfor %}
+
+
+
+							</li>
+
+
+						</ul>
+
+
+						<div class="page">
+							{% if paginate.has_prev %}
+        					<a href="/classmate/?page={{ paginate.prev_num }}">上一页</a>
+    					{% endif %}
+
+						{% for i in paginate.iter_pages() %}
+							<a href="/classmate/?page={{ i }}">{{ i }}</a>
+						{% endfor %}
+
+						{% if paginate.has_next %}
+							<a href="/classmate/?page={{ paginate.next_num }}">下一页</a>
+						{% endif %}
+						</div>
+
+					</div><!--left-->
+				</div>
+			</div>
+{% endblock %}
