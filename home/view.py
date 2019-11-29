@@ -1,6 +1,9 @@
 import hashlib
+import json
 import os
 import random
+
+from sqlalchemy import extract
 
 from sms import YunTongXin
 from config import config1
@@ -8,9 +11,10 @@ from flask import render_template, request, make_response, Response, redirect, j
 from werkzeug.utils import secure_filename
 
 from home import home
-from models import User, db, User_info, Friend,Class
+from models import User, db, User_info, Friend, Class
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 @home.route('/classmate/')
 def classmate():
@@ -21,14 +25,13 @@ def classmate():
     return render_template('classmate.html', paginate=paginate, video=video)
 
 
-
 @home.route('/classmarry/')
 def classmarry():
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 2))
     paginate = Class.query.order_by('id').paginate(page, per_page, error_out=False)
     video = paginate.items
-    print(video,1111)
+    print(video, 1111)
     return render_template('classmarry.html', paginate=paginate, video=video)
 
 
@@ -89,31 +92,161 @@ def reg():
         return redirect('/login/')
 
 
+def loginde(fnc):
+    def wrap1():
+        if 'name' in session:
+           return fnc()
+        else:
+            return redirect('/login/')
+    return wrap1
+
+
 @home.route('/')
+@loginde
 def index():
     # is_login = request.cookies.get('name')
     is_login = session.get('name')
     return render_template('index.html', is_login=is_login)
 
 
-@home.route('/search/')
+@home.route('/search/',methods=["GET", "POST"])
 def search():
-    # is_login = request.cookies.get('name')
+    #判断是否用户是否登录,登录则显示用户名
     is_login = session.get('name')
-    page = int(request.args.get('page', 1))
-    val = request.args.get('val')
-    data = []
-    if not val:
-        user_list = User.query.order_by('create_time').paginate(page=page, per_page=1)
-        for user in user_list.items:
-            info = User_info.query.filter_by(user_id=user.id).first()
-            data.append(info)
-            print(data)
-    else:
-        user_list = User_info.query.filter(User_info.nickname.like('%' + val + '%')).paginate(page=page, per_page=1)
-        data = user_list.items
-    return render_template('search.html', is_login=is_login, paginate1=data, paginate=user_list, val=val)
+    user_new = User.query.order_by(User.update_time.desc())
+    new_list = []
+    for i in range(2):
+        new_user = User_info.query.filter_by(user_id=user_new[i].id).first()
+        new_list.append(new_user)
 
+    """
+    搜索功能
+    """
+    try:
+        if request.method == 'GET':
+            page = int(request.args.get('page',1))
+            user_list = User.query.order_by(User.create_time.desc()).paginate(page=page,per_page=2)
+
+            page_data = []
+            for i in user_list.items:
+                data = User_info.query.filter_by(user_id=i.id).first()
+                page_data.append(data)
+
+            return render_template("search.html", page_data=page_data,paginate=user_list,new_list=new_list,is_login=is_login)
+
+        elif request.method == 'POST':
+            #获取json数据并解析
+            data = json.loads(request.form.get('data',''))
+            op_text = data['option']
+            op_gender = data['op_gender']
+            op_birth = data['op_birth']
+            page = data['page']
+            order = data['order']
+            print(op_text)
+            print(op_gender)
+            print(op_birth)
+            print(page)
+            print(order)
+
+            #对性别字符进行处理
+            if op_gender == '男朋友':
+                op_gender = 'm'
+            else:
+                op_gender = 'n'
+
+            #判断是否需要进行特定的排序
+            if order == 0:  #不需要对特定的字段进行排序显示
+                #筛选数据库中符合的用户的信息，并进行分页
+                option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%") if op_text is not None else "",extract('year', User_info.birth)== op_birth,User_info.sex==op_gender).paginate(page=page, per_page=2)
+                print(option_user.items)
+
+                if option_user:
+                    opt_list = []
+                    # 按照最新登录时间进行顺序匹配
+                    for u in user_new:
+                        for user in option_user.items:
+                            if user.user_id == u.id:
+                                opt_list.append(user)
+                    print(opt_list)
+                    # 总页数
+                    total = option_user.total
+                    print(total)
+
+                    page_data = Ajax_send(opt_list,total,page,order)
+                    return jsonify({'code': 200, 'data': page_data})
+                else:
+                    return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
+            elif order in range(1,4):
+                if order == 1:  #需要进行高度降序排列
+                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year',User_info.birth) == op_birth, User_info.sex == op_gender).order_by(User_info.high.desc()).paginate(page=page,per_page=2)
+                    print(option_user.items)
+                    if option_user:
+                        # 总页数
+                        total = option_user.total
+                        print(total)
+
+                        page_data = Ajax_send(option_user.items, total, page, order)
+                        return jsonify({'code': 200, 'data': page_data})
+
+                    else:
+                        return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
+
+                elif order == 2:  #需要进行资产降序排列
+                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year',User_info.birth) == op_birth, User_info.sex == op_gender).order_by(User_info.income.desc()).paginate(page=page,per_page=2)
+                    print(option_user.items)
+                    if option_user:
+                        # 总页数
+                        total = option_user.total
+                        print(total)
+
+                        page_data = Ajax_send(option_user.items, total, page, order)
+                        return jsonify({'code': 200, 'data': page_data})
+
+                    else:
+                        return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
+
+                elif order == 3:  #需要进行登录次数降序排列
+                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year', User_info.birth) == op_birth,User_info.sex == op_gender).paginate(page=page, per_page=2)
+                    user = User.query.order_by(User.times.desc())
+                    if option_user:
+                        opt_list = []
+                        for u in user:
+                            for user in option_user.items:
+                                if user.user_id == u.id:
+                                    opt_list.append(user)
+                        print(opt_list)
+                        # 总页数
+                        total = option_user.total
+                        print(total)
+
+                        page_data = Ajax_send(opt_list, total, page, order)
+                        return jsonify({'code': 200, 'data': page_data})
+                    else:
+                        return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
+            else:
+                return jsonify({'code': 10009, 'data': {'error': "操作出错,请重试"}})
+    except Exception as e:
+        print('fail', e)
+        return render_template("search.html")
+
+def Ajax_send(opt_list,total,page,order):
+    # 遍历出来所有选择的用户信息，发送给前端
+    page_data = []
+    for i in opt_list:
+        d = {}
+        d['image'] = i.image
+        d['nickname'] = i.nickname
+        d['age'] = i.age
+        d['education'] = i.education
+        d['high'] = i.high
+        d['profession'] = i.profession
+        d['property'] = i.property
+        d['total'] = total
+        d['page'] = page
+        d['order'] = order
+        page_data.append(d)
+    print(page_data)
+    return page_data
 
 @home.route('/findpassword/')
 def findpwd():
@@ -238,7 +371,7 @@ def immed():
         except Exception as e:
             print(e)
             return Response('用户信息提交失败')
-        return redirect('/')
+        return '成功'
 
 
 @home.route('/story/')

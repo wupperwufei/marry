@@ -41,7 +41,7 @@ class User_info(db.Model):
     story = db.relationship('Story', backref='user_info', lazy='dynamic')  # 一对多
 
     def __repr__(self):
-        return '<User_info:%r>' % self.nickname
+        return '<User_info:%s age:%s>' % (self.nickname,self.age)
 
 
 # 择偶标准

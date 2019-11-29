@@ -1,91 +1,107 @@
 {% extends 'comm/comm.html' %}
-{% block css_js %}
-<script>
-    $(function(){
-        $('.search-btn').click(function(){
-            var val=$('#search_input').val()
-            window.location.href="http://127.0.0.1:5000/search/?val="+val;
-        })
-      })
-</script>
-{% endblock %}
 {% block content %}
 		<div class="main">
 			<div class="main-box1">
-			<div class="main-left"><!--left-->
+				<div class="main-left"><!--left-->
 				<div class="search-top">
 					<div class="search">
-						<input type="text" placeholder="更多心仪对象，请搜索" id="search_input" />
+						<input type="text" placeholder="更多心仪对象，请搜索昵称" id="text_s">
 						<button class="search-btn"><img src="/static/images/search.png"/></button>
 					</div>
-				</div>
-				<ul class="sequence">
-					<li><a href="" class="sort_a"><i class="sort_a1">综合排序</i></a></li>
-					<li><a href="" class="sort_a"><i class="sort_a1">最新会员  </i></a></li>
-					<li><a href="" class="sort_a"><i class="sort_a1">魅力值</i></a></li>
-				</ul>
-				<ul class="main-member">
-                    {% for user in paginate1 %}
-					<li>
-						<a href="#">
-						  <img src="/static/media/{{user.image}}">
-						  <p class="mem-num">{{user.nickname}}</p>
-						  <p class="mem-text"> |  本科  |  165CM   <br> 销售  |  有房</p>
-					    </a>
-					</li>
-                    {% endfor %}
-				</ul>
-				<div class="page">
-        {% if paginate.has_prev %}
-        <a href="/search/?page={{ paginate.prev_num }}&val={{ val }}">上一页</a>
-    {% endif %}
-
-    {% for i in paginate.iter_pages() %}
-        <a href="/search/?page={{ i }}&val={{ val }}">{{ i }}</a>
-    {% endfor %}
-
-    {% if paginate.has_next %}
-        <a href="/search/?page={{ paginate.next_num }}&val={{ val }}">下一页</a>
-    {% endif %}
-
-				</div>
-			</div><!--left-->
-			<div class="main-right"><!--right-->
-				<div class="main-log">
-					<div class="tit">会员登录</div>
-					<div class="main-logbox">
-						<i class="main-user"></i>
-						<input placeholder="账户名" type="text" class="main-user-input" />
-					</div>
-					<div class="main-logbox">
-						<i class="main-password"></i>
-						<input placeholder="密码" type="text" class="main-user-input" />
-					</div>
-					<button type="button"  class="main-btn">立即登录</button>
-					<div class="main-pass-text">没有帐号？<a href="">免费注册</a><a href="" class="forget">忘记密码 ></a></div>
-				</div>
-				<div class="main-radv"><img src="/static/images/adv2.png"/></div>
-				<div class="main-radv"><img src="/static/images/adv1.png"/></div>
-				<div class="main-message">
-					<div class="tit">最新会员推荐</div>
-					<ul class="member-list">
+					<ul class="search-find">
 						<li>
-							<img src="/static/images/bgimg.jpg" />
-							<p>会员号：100001</p>
-                            <p>婚况：未      年龄：26</p>
-                            <p>学历：大专   身高：160cm</p>
-                            <p> 职业：CEO   房产：有房</p>
+							<span>我要找：</span>
+							<select id="op_g">
+								<option>男朋友</option>
+								<option>女朋友</option>
+							</select>
 						</li>
 						<li>
-							<img src="/static/images/bgimg.jpg" />
-							<p>会员号：100001</p>
-                            <p>婚况：未      年龄：26</p>
-                            <p>学历：大专   身高：160cm</p>
-                            <p> 职业：CEO   房产：有房</p>
+							<span>出生年月：</span>
+							<select id="op_b">
+								<option>1989</option>
+								<option>1990</option>
+								<option>1991</option>
+								<option>1992</option>
+								<option>1993</option>
+								<option>1994</option>
+								<option>1995</option>
+							</select>
 						</li>
 					</ul>
+					<button class="s-btn" onclick="T_search(1,0);">搜索</button>
+					<!--<a class="s-btn" onclick="T_search(1);">搜索</a>-->
+				</div>
+				<div class="sequence" id="show" style="display:none">
+				</div>
+				<ul class="sequence">
+					<li><a href="javascript:void(0);" class="sort_a" onclick="T_search(1,1);"><i
+							class="sort_a1">身高排序
+					</i></a></li>
+					<li><a href="javascript:void(0);" class="sort_a" onclick="T_search(1,2);"><i
+							class="sort_a1">资产排序
+					</i></a></li>
+					<li><a href="javascript:void(0);" class="sort_a" onclick="T_search(1,3);"><i
+							class="sort_a1">活跃会员
+					</i></a></li>
+				</ul>
+
+				<ul class="main-member">
+					{% for user in page_data %}
+					<li>
+						<a href="">
+							<img src="/static/media/{{ user.image }}" width="150px" height="140px">
+						  <p class="mem-num">昵称：{{ user.nickname }}</p>
+						  <p class="mem-text">{{ user.age }}  |  {{ user.education }}  |  {{ user.high }}<br> {{ user.profession }}  | {{ user.property }}</p>
+					    </a>
+					</li>
+					{% endfor %}
+
+				</ul>
+				<div class="page">
+					{% if paginate %}
+					  {% if paginate.has_prev %}
+						<a href="/search/?page={{ paginate.prev_num }}">上一页</a>
+					  {% endif %}
+					  {% for i in paginate.iter_pages() %}
+						<a href="/search/?page={{ i }}">{{ i }}</a>
+					  {% endfor %}
+					  {% if paginate.has_next %}
+					　 	<a href="/search/?page={{ paginate.next_num }}">下一页</a>
+					  {% endif %}　
+						当前页数：[{{ paginate.page }}/{{ paginate.pages }}]&nbsp;
+					{% endif %}
+				</div>
+				</div><!--left-->
+				<div class="main-right"><!--right-->
+					<div class="main-log">
+						<div class="tit">会员登录</div>
+						<div class="main-logbox">
+							<i class="main-user"></i>
+							<input placeholder="账户名" type="text" class="main-user-input" />
+						</div>
+						<div class="main-logbox">
+							<i class="main-password"></i>
+							<input placeholder="密码" type="text" class="main-user-input" />
+						</div>
+						<!--<button type="button"  class="main-btn">立即登录</button>-->
+						<div class="main-pass-text">没有帐号？<a href="">免费注册</a><a href="" class="forget">忘记密码 ></a></div>
+					</div>
+					<div class="main-radv"><img src="/static/images/adv2.png"/></div>
+					<div class="main-radv"><img src="/static/images/adv1.png"/></div>
+					<div class="main-message">
+						<div class="tit">活跃会员推荐</div>
+						<ul class="member-list">
+							{% for mem in new_list %}
+							<li>
+								<img src="/static/media/{{ mem.image }}" />
+								<p>昵称：{{ mem.nickname }}</p>
+								<p>年龄：{{ mem.age }}</p>
+								<p>学历：{{ mem.education }}   身高：{{ mem.high }}</p>
+								<p> 职业：{{ mem.profession }}   房产：{{ mem.property }}</p>
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 {% endblock %}
-
-
-
