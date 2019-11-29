@@ -124,7 +124,7 @@ def search():
                 op_gender = 'F'
 
             #判断是否需要进行特定的排序
-            if order == '':  #不需要对特定的字段进行排序显示
+            if order == 0:  #不需要对特定的字段进行排序显示
                 #筛选数据库中符合的用户的信息，并进行分页
                 option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%") if op_text is not None else "",extract('year', User_info.birth)== op_birth,User_info.sex==op_gender).paginate(page=page, per_page=2)
                 print(option_user.items)
@@ -145,8 +145,8 @@ def search():
                     return jsonify({'code': 200, 'data': page_data})
                 else:
                     return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
-            elif order in ['high','property','times']:
-                if order == 'high':  #需要进行高度降序排列
+            elif order in range(1,4):
+                if order == 1:  #需要进行高度降序排列
                     option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year',User_info.birth) == op_birth, User_info.sex == op_gender).order_by(User_info.high.desc()).paginate(page=page,per_page=2)
                     print(option_user.items)
                     if option_user:
@@ -160,7 +160,7 @@ def search():
                     else:
                         return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
 
-                elif order == 'property':  #需要进行高度降序排列
+                elif order == 2:  #需要进行高度降序排列
                     option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year',User_info.birth) == op_birth, User_info.sex == op_gender).order_by(User_info.property.desc).paginate(page=page,per_page=2)
                     print(option_user.items)
                     if option_user:
@@ -174,7 +174,7 @@ def search():
                     else:
                         return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
 
-                elif order == 'times':  #需要进行高度降序排列
+                elif order == 3:  #需要进行高度降序排列
                     option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year', User_info.birth) == op_birth,User_info.sex == op_gender).paginate(page=page, per_page=2)
                     user = User.query.order_by(User.times.desc)
                     if option_user:
