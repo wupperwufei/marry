@@ -1,0 +1,28 @@
+{% extends 'comm/comm.html' %}
+{% block content %}
+			<div class="main">
+				<div class="main-box1">
+					<div class="main-right" style="margin-left: 0; margin-right: 14px;"><!--right-->
+					<div class="list-main1-title">婚恋故事</div>
+					<div class="col c2"><!--menu-->
+					<div class="list-top"><a href="" class="cur">成功婚恋</a></div>
+					<div class="list-top"
+                         style="border-bottom: 0;"><a href="/sharemarry/">分享婚恋</a></div>
+					</div><!--menu-->
+					</div><!--right-->
+					<div class="main-left"><!--left-->
+						<div class="s-address">当前位置：<a href="">首页 </a>&gt; 婚恋故事 &gt; 成功婚恋</div>
+						<ul class="story">
+							<h2>{{ story.title }}</h2>
+							<p class="story-info-group">
+								<span>发布时间:{{ story.created_time }}</span>
+								<span>作者:{{ story.author }}</span>
+							</p>
+							<article class="story-content">
+								{{ story.content|safe }}
+							</article>
+						</ul>
+					</div><!--left-->
+				</div>
+			</div>
+{% endblock %}

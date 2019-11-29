@@ -1,0 +1,27 @@
+{% extends 'comm/comm.html' %}
+{% block content %}
+		<div class="main">
+			<div class="main-box1">
+				<div class="main-right" style="margin-left: 0; margin-right: 14px;"><!--right-->
+				<div class="list-main1-title">婚恋故事</div>
+				<div class="col c2"><!--menu-->
+                <div class="list-top"
+				style="border-bottom: 0;"><a href="{{ url_for('home.story')}}">成功婚恋</a></div>
+                <div class="list-top" style="border-bottom: 0;"><a href="" class="cur">分享婚恋</a></div>
+		        </div><!--menu-->
+				</div><!--right-->
+				<div class="main-left"><!--left-->
+					<div class="s-address">当前位置：<a href="">首页 </a>&gt; 婚恋故事 &gt; 分享婚恋</div>
+					<div class="share">
+						<div class="title">【如何分毫您的婚恋】</div>
+						<div class="share-text">
+							<p>如果您的婚恋故事可以给他人以经验或教训，请联系我们（QQ专线：2101016027）我们将有专业的婚恋咨询师对您进行访谈，访谈音频将对外公开。为了使访谈顺利进行，请您事先梳理一下事件的进程 ，列个大纲，或者先预演几遍。我们会重点谈论以下几点：</p>
+						    <p>1.您和对方是怎么认识的？</p>
+						    <p>2.在恋爱过程中，你们的主要矛盾或冲突是什么？原因是什么？</p>
+						    <p>3.婚后生活令您对恋爱择偶产生了怎样的感悟？</p>
+						</div>
+					</div>
+				</div><!--left-->
+			</div>
+		</div>
+{% endblock %}

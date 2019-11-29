@@ -1,0 +1,45 @@
+{% extends 'comm/comm.html' %}
+{% block content %}
+			<div class="main">
+				<div class="main-box1">
+					<div class="main-right" style="margin-left: 0; margin-right: 14px;"><!--right-->
+					<div class="list-main1-title">婚恋故事</div>
+					<div class="col c2"><!--menu-->
+					<div class="list-top"><a href="" class="cur">成功婚恋</a></div>
+					<div class="list-top"
+                         style="border-bottom: 0;"><a href="/sharemarry/">分享婚恋</a></div>
+					</div><!--menu-->
+					</div><!--right-->
+					<div class="main-left"><!--left-->
+						<div class="s-address">当前位置：<a href="">首页 </a>&gt; 婚恋故事 &gt; 成功婚恋</div>
+						<ul class="success">
+							<li>
+								{% for s in sto %}
+								<a href="{{ url_for('home.story_detail',story_id = s.id) }}" class="success-pic"><img src="/static/images/{{s.image}}"/></a>
+
+								<div class="success-text">
+								   <a href="{{ url_for('home.story_detail',story_id = s.id) }}">{{ s.title }}</a>
+								   <h5>{{ s.created_time }}<span style="color: #bbb;">|</span>
+                                       来源：{{ s.author }}</h5>
+								   <p> {{ s.desc }}</p>
+								   <p><a href="{{ url_for('home.story_detail',story_id = s.id) }}" class="cf60">[查看详情]
+								   </a></p>
+								</div>
+								{% endfor %}
+							</li>
+						</ul>
+						<div class="page">
+							{% if paginate.has_prev %}
+        					<a href="/story/?page={{ paginate.prev_num }}">上一页</a>
+							{% endif %}
+							{% for i in paginate.iter_pages() %}
+								<a href="/story/?page={{ i }}">{{ i }}</a>
+							{% endfor %}
+							{% if paginate.has_next %}
+								<a href="/story/?page={{ paginate.next_num }}">下一页</a>
+							{% endif %}
+						</div>
+					</div><!--left-->
+				</div>
+			</div>
+{% endblock %}

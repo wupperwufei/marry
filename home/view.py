@@ -8,7 +8,7 @@ from flask import render_template, request, make_response, Response, redirect, j
 from werkzeug.utils import secure_filename
 
 from home import home
-from models import User, db, User_info, Friend
+from models import User, db, User_info, Friend,Story
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -233,3 +233,35 @@ def md5(data):
 def jsonify1(dct):
     import json
     return json.dumps(dct, ensure_ascii=False)
+
+
+
+
+
+@home.route('/story/')
+def story():
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 2))
+    paginate = Story.query.order_by('id').paginate(page, per_page, error_out=False)
+    sto = paginate.items
+    return render_template('story.html',paginate=paginate, sto=sto)
+
+
+@home.route('/story_detail/<story_id>')
+def story_detail(story_id):
+
+    story = Story.query.filter(Story.id == story_id).first()
+    if not story:
+        return redirect('/story/')
+    return render_template('story_detail.html',story=story)
+
+
+@home.route('/sharemarry/')
+def sharemarry():
+    return render_template('sharemarry.html')
+
+
+
+
+
+
