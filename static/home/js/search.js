@@ -8,7 +8,7 @@ function T_search(page,ord){
     console.log($op_birth)
     //如果用户没有输入文本信息查询，则弹框提醒
     if($opt.length==0 && $op_gender.length!=0){
-        alert("请输入你想查询的昵称~")
+        window.location.href = "http://127.0.0.1:5000/search/";
     }
     else{
 //        var list_template = "<ul class='list-group'><li>查询条件</li><li>"+$opt+"</li><li>"+$op_gender+"</li><li>"+$op_birth+"</li></ul>";

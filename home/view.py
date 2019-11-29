@@ -9,9 +9,28 @@ from flask import render_template, request, Response, redirect, jsonify, session
 from werkzeug.utils import secure_filename
 from sqlalchemy import extract
 from home import home
-from models import User, db, User_info, Friend
+from models import User, db, User_info, Friend,Class
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+@home.route('/classmate/')
+def classmate():
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 2))
+    paginate = Class.query.order_by('id').paginate(page, per_page, error_out=False)
+    video = paginate.items
+    return render_template('classmate.html', paginate=paginate, video=video)
+
+
+
+@home.route('/classmarry/')
+def classmarry():
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 2))
+    paginate = Class.query.order_by('id').paginate(page, per_page, error_out=False)
+    video = paginate.items
+    print(video,1111)
+    return render_template('classmarry.html', paginate=paginate, video=video)
 
 
 @home.route('/login/', methods=["GET", "POST"])
@@ -160,8 +179,8 @@ def search():
                     else:
                         return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
 
-                elif order == 2:  #需要进行高度降序排列
-                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year',User_info.birth) == op_birth, User_info.sex == op_gender).order_by(User_info.property.desc).paginate(page=page,per_page=2)
+                elif order == 2:  #需要进行资产降序排列
+                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year',User_info.birth) == op_birth, User_info.sex == op_gender).order_by(User_info.income.desc()).paginate(page=page,per_page=2)
                     print(option_user.items)
                     if option_user:
                         # 总页数
@@ -174,9 +193,9 @@ def search():
                     else:
                         return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
 
-                elif order == 3:  #需要进行高度降序排列
+                elif order == 3:  #需要进行登录次数降序排列
                     option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year', User_info.birth) == op_birth,User_info.sex == op_gender).paginate(page=page, per_page=2)
-                    user = User.query.order_by(User.times.desc)
+                    user = User.query.order_by(User.times.desc())
                     if option_user:
                         opt_list = []
                         for u in user:
