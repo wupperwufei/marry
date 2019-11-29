@@ -34,7 +34,9 @@ function T_search(page,ord){
                             for(i in result.data){
                             console.log(i)
                             html_body += '<li>'
-                            html_body += '<a href="">'
+                            html_body += '<a href="/memberinfor/?id='
+                            html_body += result.data[i].id+'">'
+                            console.log(html_body)
                             html_body += '<img src="/static/media/'
                             html_body += result.data[i].image
                             html_body += '"width="150px" height="140px"><p class="mem-num">昵称：'
@@ -74,13 +76,24 @@ function T_search(page,ord){
                                 html_body2 += ';">上一页</a>'
                                 }
                             for(i=1;i<=pages;i++){
-                                html_body2 += '<a href="javascript:void(0);" onclick="T_search('
-                                html_body2 += i
-                                html_body2 += ','
-                                html_body2 += order
-                                html_body2 += ');">'
-                                html_body2 += i
-                                html_body2 += '</a>'
+                                if(i!=result.data[0].page){
+                                    html_body2 += '<a href="javascript:void(0);" onclick="T_search('
+                                    html_body2 += i
+                                    html_body2 += ','
+                                    html_body2 += order
+                                    html_body2 += ');">'
+                                    html_body2 += i
+                                    html_body2 += '</a>'
+                                }else{
+                                    html_body2 += '<a href="javascript:void(0);" style="background:red;" onclick="T_search('
+                                    html_body2 += i
+                                    html_body2 += ','
+                                    html_body2 += order
+                                    html_body2 += ');">'
+                                    html_body2 += i
+                                    html_body2 += '</a>'
+                                }
+
                             }
                             if(result.data[0].page<pages){
                                 html_body2 += '<a href="javascript:void(0);" onclick="T_search('

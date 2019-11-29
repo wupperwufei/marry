@@ -1,0 +1,131 @@
+{% extends 'comm/comm.html' %}
+{% block css_js %}
+<script src="/static/js/comment.js"></script>
+<script src="/static/js/popup.mini.js"></script>
+
+{% endblock %}
+{% block content %}
+		<div class="main">
+			<div class="main-box1">
+			<div class="main-left"><!--left-->
+				<div class="s-address">当前位置：<a href="">首页 </a>>搜索会员>{{user_1.id}}</div>
+				<div class="s-top">
+			    <div class="preview">
+	               <div id="vertical"
+                        class="bigImg"><img src="/static/media/{{user_info.image}}" width="300" height="300" alt="" id="midimg" /></div>
+	               <div class="smallImg">
+		              <div class="scrollbutton smallImgUp disabled"></div>
+		              <div id="imageMenu">
+			            <ul>
+				           <li id="onlickImg"><img src="/static/media/{{user_info.image}}" width="60" height="60" /></li>
+				           <li><img src="/static/media/09.jpg" width="68" height="68" /></li>
+				           <li><img src="/static/media/123.jpg" width="68" height="68" /></li>
+				           <li><img src="/static/media/{{user_info.image}}" width="68" height="68" /></li>
+			            </ul>
+		              </div>
+		               <div class="scrollbutton smallImgDown"></div>
+	                 </div>
+                </div>
+                <div class="s-minfor">
+                	<div class="tit">
+                		<div class="s-mname">{{user_info.nickname}} <span>会员号：{{user_1.id}}</span></div>
+                		<div class="m-icon">
+                			<abbr title="{{user_1.iphone}}"><a href="#" class="m-icon-iphone"></a></abbr>
+                            <abbr title="{{user_info.email }}"><a href="#" class="m-icon-email"></a></abbr>
+                		</div>
+                	</div>
+                	<ul class="infor">
+                	   <li>
+                		  <p>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span>{{user_info.sex}}</span></p>
+                		  <p>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：<span>{{user_info.education}}</span></p>
+                	   </li>
+                	   <li>
+                		  <p>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：<span>{{user_info.age}}</span></p>
+                		  <p>身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高：<span>{{user_info.high}}</span></p>
+                	   </li>
+                    </ul>
+                    <ul class="infor1">
+                       <li>
+                       	<p>户&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;藉：<span>{{user_info.register}}</span></p>
+                       	<p>现住居地：<span>{{user_info.residence}}</span></p>
+                       </li>
+                        <li>
+                		  <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业：<span>{{user_info.profession}}</span></p>
+                		  <p>收&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;入：<span>{{user_info.income}}</span></p>
+                	   </li>
+                    </ul>
+                </div>
+                </div>
+              <div class="s-introduce"> <div class="tit">择偶要求</div></div>
+              <ul class="s-yaoqiu">
+              	<li>
+              		<p>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：<span>{{friend.f_age }}</span></p>
+              	</li>
+              	<li>
+              		<p>身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高：<span>{{friend.f_high }}</span></p>
+              	</li>
+              	<li>
+              		<p>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：<span>{{friend.f_education }}</span></p>
+
+                  <li>
+              		<p>收&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;入：<span>{{friend.f_income }}</span></p>
+              	</li>
+              </ul>
+              <ul class="infor1">
+                       <li>
+                       	<p>户&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;藉：<span>{{friend.f_register }}</span></p>
+                       	<p>居 &nbsp;住&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地：<span>{{friend.f_residence }}</span></p>
+                       </li>
+               </ul>
+               <div class="s-marry">希望他是一个成熟稳重的男人，喜爱旅游，为人正直，孝敬父母</div>
+			</div><!--left-->
+			<div class="main-right"><!--right-->
+				{% if is_login %}
+                <div class="main-log">
+					<div class="tit">{{ my.nickname }}</div>
+					<div class="mem-pic"><img src="/static/media/{{my.image}}"/></div>
+					<div class="main-pass-text" style="margin-top: 25px;">
+						<a href="" class="entermem" style="color: #fff;">进入个人中心</a>
+						<a href="" class="forget">忘记密码 ></a>
+					</div>
+				</div>
+                {%else%}
+                <div class="main-log"><img src="/static/media/{{ mem.image }}" />
+					<div class="tit">会员登录</div>
+                    <form action="/login/" method="post">
+					<div class="main-logbox">
+						<i class="main-user"></i>
+						<input placeholder="账户名" type="text"  id='uphone' name="uphone" class="main-user-input">
+					</div>
+					<div class="main-logbox">
+						<i class="main-password"></i>
+						<input placeholder="密码" type="password" id='upass' name="upass"  class="main-user-input">
+					</div>
+					<button type="submit" name="submit" id="btn1" class="main-btn">立即登录</button>
+                    </form>
+					<div class="main-pass-text">没有帐号？
+                        <a href="/reg/">免费注册</a><a href="/findpassword/" class="forget">忘记密码 &gt;</a>
+                    </div>
+
+                    </div>
+                {% endif %}
+				<div class="main-message">
+					<div class="tit">最新会员推荐</div>
+					<ul class="member-list">
+						{% for mem in new_list %}
+							<li>
+								<a
+                                        href="/memberinfor/?id={{mem.user_id}}"><img
+                                        src="/static/media/{{ mem.image }}" /></a>
+								<p>昵称：{{ mem.nickname }}</p>
+								<p>年龄：{{ mem.age }}</p>
+								<p>学历：{{ mem.education }}   身高：{{ mem.high }}</p>
+								<p> 职业：{{ mem.profession }}   房产：{{ mem.property }}</p>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div><!--right-->
+			</div>
+        </div>
+{% endblock %}

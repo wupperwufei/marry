@@ -95,9 +95,10 @@ def reg():
 def loginde(fnc):
     def wrap1():
         if 'name' in session:
-           return fnc()
+            return fnc()
         else:
             return redirect('/login/')
+
     return wrap1
 
 
@@ -109,9 +110,9 @@ def index():
     return render_template('index.html', is_login=is_login)
 
 
-@home.route('/search/',methods=["GET", "POST"])
+@home.route('/search/', methods=["GET", "POST"])
 def search():
-    #判断是否用户是否登录,登录则显示用户名
+    # 判断是否用户是否登录,登录则显示用户名
     is_login = session.get('name')
     user_new = User.query.order_by(User.update_time.desc())
     new_list = []
@@ -124,19 +125,20 @@ def search():
     """
     try:
         if request.method == 'GET':
-            page = int(request.args.get('page',1))
-            user_list = User.query.order_by(User.create_time.desc()).paginate(page=page,per_page=2)
+            page = int(request.args.get('page', 1))
+            user_list = User.query.order_by(User.create_time.desc()).paginate(page=page, per_page=2)
 
             page_data = []
             for i in user_list.items:
                 data = User_info.query.filter_by(user_id=i.id).first()
                 page_data.append(data)
-
-            return render_template("search.html", page_data=page_data,paginate=user_list,new_list=new_list,is_login=is_login)
+            # print(page_data)
+            return render_template("search.html", page_data=page_data, paginate=user_list, new_list=new_list,
+                                   is_login=is_login)
 
         elif request.method == 'POST':
-            #获取json数据并解析
-            data = json.loads(request.form.get('data',''))
+            # 获取json数据并解析
+            data = json.loads(request.form.get('data', ''))
             op_text = data['option']
             op_gender = data['op_gender']
             op_birth = data['op_birth']
@@ -148,16 +150,19 @@ def search():
             print(page)
             print(order)
 
-            #对性别字符进行处理
+            # 对性别字符进行处理
             if op_gender == '男朋友':
                 op_gender = 'm'
             else:
                 op_gender = 'n'
 
-            #判断是否需要进行特定的排序
-            if order == 0:  #不需要对特定的字段进行排序显示
-                #筛选数据库中符合的用户的信息，并进行分页
-                option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%") if op_text is not None else "",extract('year', User_info.birth)== op_birth,User_info.sex==op_gender).paginate(page=page, per_page=2)
+            # 判断是否需要进行特定的排序
+            if order == 0:  # 不需要对特定的字段进行排序显示
+                # 筛选数据库中符合的用户的信息，并进行分页
+                option_user = User_info.query.filter(
+                    User_info.nickname.like("%" + op_text + "%") if op_text is not None else "",
+                    extract('year', User_info.birth) == op_birth, User_info.sex == op_gender).paginate(page=page,
+                                                                                                       per_page=2)
                 print(option_user.items)
 
                 if option_user:
@@ -172,13 +177,16 @@ def search():
                     total = option_user.total
                     print(total)
 
-                    page_data = Ajax_send(opt_list,total,page,order)
+                    page_data = Ajax_send(opt_list, total, page, order)
                     return jsonify({'code': 200, 'data': page_data})
                 else:
                     return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
-            elif order in range(1,4):
-                if order == 1:  #需要进行高度降序排列
-                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year',User_info.birth) == op_birth, User_info.sex == op_gender).order_by(User_info.high.desc()).paginate(page=page,per_page=2)
+            elif order in range(1, 4):
+                if order == 1:  # 需要进行高度降序排列
+                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),
+                                                         extract('year', User_info.birth) == op_birth,
+                                                         User_info.sex == op_gender).order_by(
+                        User_info.high.desc()).paginate(page=page, per_page=2)
                     print(option_user.items)
                     if option_user:
                         # 总页数
@@ -191,8 +199,11 @@ def search():
                     else:
                         return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
 
-                elif order == 2:  #需要进行资产降序排列
-                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year',User_info.birth) == op_birth, User_info.sex == op_gender).order_by(User_info.income.desc()).paginate(page=page,per_page=2)
+                elif order == 2:  # 需要进行资产降序排列
+                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),
+                                                         extract('year', User_info.birth) == op_birth,
+                                                         User_info.sex == op_gender).order_by(
+                        User_info.income.desc()).paginate(page=page, per_page=2)
                     print(option_user.items)
                     if option_user:
                         # 总页数
@@ -200,13 +211,15 @@ def search():
                         print(total)
 
                         page_data = Ajax_send(option_user.items, total, page, order)
-                        return jsonify({'code': 200, 'data': page_data})
+                        return jsonify1({'code': 200, 'data': page_data})
 
                     else:
                         return jsonify({'code': 10008, 'data': {'error': "未查到相关用户"}})
 
-                elif order == 3:  #需要进行登录次数降序排列
-                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),extract('year', User_info.birth) == op_birth,User_info.sex == op_gender).paginate(page=page, per_page=2)
+                elif order == 3:  # 需要进行登录次数降序排列
+                    option_user = User_info.query.filter(User_info.nickname.like("%" + op_text + "%"),
+                                                         extract('year', User_info.birth) == op_birth,
+                                                         User_info.sex == op_gender).paginate(page=page, per_page=2)
                     user = User.query.order_by(User.times.desc())
                     if option_user:
                         opt_list = []
@@ -229,11 +242,13 @@ def search():
         print('fail', e)
         return render_template("search.html")
 
-def Ajax_send(opt_list,total,page,order):
+
+def Ajax_send(opt_list, total, page, order):
     # 遍历出来所有选择的用户信息，发送给前端
     page_data = []
     for i in opt_list:
         d = {}
+        d['id'] = i.user_id
         d['image'] = i.image
         d['nickname'] = i.nickname
         d['age'] = i.age
@@ -247,6 +262,26 @@ def Ajax_send(opt_list,total,page,order):
         page_data.append(d)
     print(page_data)
     return page_data
+
+
+@home.route('/memberinfor/')
+def member():
+    id = request.args.get('id')
+    id=id.strip()
+    my_id=int(request.cookies.get('id'))
+    my=User_info.query.filter_by(user_id=my_id).first()
+    print(my)
+    user_1=User.query.filter_by(id=id).first()
+    user_info=User_info.query.filter_by(user_id=id).first()
+    user_new = User.query.order_by(User.update_time.desc())
+    friend=Friend.query.filter_by(user_id=id).first()
+    print(friend)
+    new_list = []
+    for i in range(2):
+        new_user = User_info.query.filter_by(user_id=user_new[i].id).first()
+        new_list.append(new_user)
+    return render_template('memberinfor.html',is_login=my_id,my=my,user_1=user_1,user_info=user_info,new_list=new_list,
+                           friend=friend)
 
 @home.route('/findpassword/')
 def findpwd():
@@ -389,4 +424,4 @@ def md5(data):
 
 def jsonify1(dct):
     import json
-    return json.dumps(dct, ensure_ascii=False)
+    return json.dumps(dct, ensure_ascii=False,separators=('',''))
